@@ -1,0 +1,10 @@
+[
+  {
+    "username": "admin",
+    "password": "$2a$10$Ju3zswh309WmQgCdbxuyquuGrb377Bag2.1lLnAvZ1v./wmfVWrNS",
+    "role": "superadmin",
+    "_id": "1773245246600ufamy",
+    "createdAt": "2026-03-11T16:07:26.600Z",
+    "updatedAt": "2026-03-11T16:07:26.600Z"
+  }
+]
