@@ -31,7 +31,7 @@ const ProtectedRoute = ({ children }) => {
   const { token, loading } = useContext(AuthContext);
 
   if (loading) return <div className="flex h-screen items-center justify-center">Loading...</div>;
-  if (!token) return <Navigate to="/admin/login" />;
+  if (!token) return <Navigate to="/ku-portal-gate" />;
 
   return children;
 };

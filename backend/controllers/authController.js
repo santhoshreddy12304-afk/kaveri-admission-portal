@@ -45,13 +45,17 @@ exports.login = async (req, res) => {
         const { username, password } = req.body;
 
         let admin = await Admin.findOne({ username });
+        console.log(`Login attempt for username: ${username}. Found in DB: ${admin ? 'Yes' : 'No'}`);
+        
         if (!admin) {
-            return res.status(400).json({ message: 'Invalid Credentials' });
+            return res.status(400).json({ message: 'Invalid Credentials (User not found)' });
         }
 
         const isMatch = await bcrypt.compare(password, admin.password);
+        console.log(`Password match for ${username}: ${isMatch ? 'Success' : 'Failed'}`);
+        
         if (!isMatch) {
-            return res.status(400).json({ message: 'Invalid Credentials' });
+            return res.status(400).json({ message: 'Invalid Credentials (Password mismatch)' });
         }
 
         const payload = {
