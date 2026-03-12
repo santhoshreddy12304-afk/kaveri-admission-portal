@@ -61,7 +61,7 @@ const DashboardOverview = () => {
         <div className="space-y-6">
             {/* Welcome */}
             <div className="bg-gradient-to-r from-ku-blue to-blue-800 rounded-2xl p-6 text-white relative overflow-hidden">
-                <div className="absolute inset-0 opacity-5" style={{backgroundImage:'url(/src/assets/images/gallery_113.jpeg)', backgroundSize:'cover'}}></div>
+                <div className="absolute inset-0 opacity-5" style={{backgroundImage:'url(/assets/images/gallery_113.jpeg)', backgroundSize:'cover'}}></div>
                 <div className="relative z-10 flex items-center justify-between">
                     <div>
                         <p className="text-blue-200 text-sm font-medium mb-1">Welcome back,</p>

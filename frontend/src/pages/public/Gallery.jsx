@@ -4,73 +4,73 @@ import { Link } from 'react-router-dom';
 // Real photos extracted from Kaveri University brochures
 const galleryItems = [
     {
-        src: '/src/assets/images/gallery_113.jpeg',
+        src: '/assets/images/gallery_113.jpeg',
         alt: 'Kaveri University Campus - Aerial View',
         category: 'Campus',
         caption: '150-Acre Green Campus — Aerial View'
     },
     {
-        src: '/src/assets/images/gallery_120.jpeg',
+        src: '/assets/images/gallery_120.jpeg',
         alt: 'Kaveri University Main Block',
         category: 'Campus',
         caption: 'Kaveri University — Main Academic Block'
     },
     {
-        src: '/src/assets/images/gallery_119.jpeg',
+        src: '/assets/images/gallery_119.jpeg',
         alt: 'University Academic Building',
         category: 'Campus',
         caption: 'Academic Complex — Architecture'
     },
     {
-        src: '/src/assets/images/gallery_121.jpeg',
+        src: '/assets/images/gallery_121.jpeg',
         alt: 'Campus Master Plan',
         category: 'Campus',
         caption: 'Campus Master Plan — 3D Render'
     },
     {
-        src: '/src/assets/images/gallery_124.jpeg',
+        src: '/assets/images/gallery_124.jpeg',
         alt: 'Campus Overview with River',
         category: 'Campus',
         caption: 'Scenic Campus Located by the River'
     },
     {
-        src: '/src/assets/images/gallery_125.jpeg',
+        src: '/assets/images/gallery_125.jpeg',
         alt: 'Sports and Residential Block',
         category: 'Campus',
         caption: 'Sports Complex & Residential Blocks'
     },
     {
-        src: '/src/assets/images/gallery_115.jpeg',
+        src: '/assets/images/gallery_115.jpeg',
         alt: 'Smart Classroom',
         category: 'Academics',
         caption: 'Modern Smart Classroom with Projector'
     },
     {
-        src: '/src/assets/images/gallery_117.jpeg',
+        src: '/assets/images/gallery_117.jpeg',
         alt: 'Science Laboratory',
         category: 'Labs',
         caption: 'Advanced Science Laboratory'
     },
     {
-        src: '/src/assets/images/gallery_122.jpeg',
+        src: '/assets/images/gallery_122.jpeg',
         alt: 'Faculty Board Meeting',
         category: 'Academics',
         caption: 'Faculty & Management — Board Meeting'
     },
     {
-        src: '/src/assets/images/gallery_123.jpeg',
+        src: '/assets/images/gallery_123.jpeg',
         alt: 'Campus Layout Top View',
         category: 'Campus',
         caption: 'Campus Layout — Satellite View'
     },
     {
-        src: '/src/assets/images/gallery_118.jpeg',
+        src: '/assets/images/gallery_118.jpeg',
         alt: 'Campus Infrastructure',
         category: 'Campus',
         caption: 'Infrastructure Development'
     },
     {
-        src: '/src/assets/images/gallery_116.jpeg',
+        src: '/assets/images/gallery_116.jpeg',
         alt: 'University Event',
         category: 'Events',
         caption: 'University Convocation Ceremony'
@@ -91,7 +91,7 @@ const Gallery = () => {
         <div className="min-h-screen bg-slate-50">
             {/* Hero Header */}
             <section className="relative py-24 overflow-hidden bg-gradient-to-br from-ku-blue via-blue-900 to-slate-900">
-                <div className="absolute inset-0 opacity-10" style={{backgroundImage:'url(/src/assets/images/gallery_113.jpeg)', backgroundSize:'cover', backgroundPosition:'center'}}></div>
+                <div className="absolute inset-0 opacity-10" style={{backgroundImage:'url(/assets/images/gallery_113.jpeg)', backgroundSize:'cover', backgroundPosition:'center'}}></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-ku-blue/80 to-slate-900/80"></div>
                 <div className="relative z-10 text-center text-white px-4">
                     <p className="text-ku-gold font-black uppercase tracking-[0.3em] text-sm mb-4">Our Campus</p>

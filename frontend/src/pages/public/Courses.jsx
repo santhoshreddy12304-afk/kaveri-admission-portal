@@ -62,7 +62,7 @@ const Courses = () => {
         <div className="bg-slate-50 min-h-screen">
             {/* Header */}
             <section className="relative py-24 overflow-hidden bg-gradient-to-br from-ku-blue via-blue-900 to-slate-900">
-                <div className="absolute inset-0 opacity-10" style={{backgroundImage:'url(/src/assets/images/gallery_125.jpeg)', backgroundSize:'cover', backgroundPosition:'center'}}></div>
+                <div className="absolute inset-0 opacity-10" style={{backgroundImage:'url(/assets/images/gallery_125.jpeg)', backgroundSize:'cover', backgroundPosition:'center'}}></div>
                 <div className="absolute inset-0 bg-ku-blue/60"></div>
                 <div className="relative z-10 text-center text-white px-4">
                     <p className="text-ku-gold font-black uppercase tracking-[0.3em] text-sm mb-4">Admissions 2026-27</p>

@@ -11,14 +11,14 @@ const CampusLife = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
                   <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-t-4 border-ku-gold hover:shadow-2xl transition">
-                      <img src="/src/assets/images/classroom.jpg" alt="Interactive Classrooms" className="h-64 w-full object-cover" />
+                      <img src="/assets/images/classroom.jpg" alt="Interactive Classrooms" className="h-64 w-full object-cover" />
                       <div className="p-8">
                          <h3 className="text-2xl font-bold mb-3 text-ku-blue">Digital Classrooms</h3>
                          <p className="text-gray-600">Engage in technology-led learning within our smart classrooms, designed for maximum student-teacher interaction.</p>
                       </div>
                   </div>
                   <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-t-4 border-ku-gold hover:shadow-2xl transition">
-                      <img src="/src/assets/images/academic-block.jpg" alt="Academic Infrastructure" className="h-64 w-full object-cover" />
+                      <img src="/assets/images/academic-block.jpg" alt="Academic Infrastructure" className="h-64 w-full object-cover" />
                       <div className="p-8">
                          <h3 className="text-2xl font-bold mb-3 text-ku-blue">Modern Infrastructure</h3>
                          <p className="text-gray-600">Our campus architecture blends aesthetics with functionality, providing a majestic environment for higher education.</p>

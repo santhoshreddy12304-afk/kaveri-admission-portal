@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { FiHome, FiUsers, FiUpload, FiMessageSquare, FiLogOut, FiBarChart2, FiGlobe } from 'react-icons/fi';
-import logo from '../assets/images/logo.png';
+const logo = '/assets/images/logo.png';
 
 const AdminLayout = () => {
     const { logout, admin } = useContext(AuthContext);

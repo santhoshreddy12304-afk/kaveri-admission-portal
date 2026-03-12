@@ -34,7 +34,7 @@ const PublicLayout = () => {
 
             {/* Footer */}
             <footer className="bg-gradient-to-br from-ku-blue via-blue-900 to-slate-900 text-gray-300 pt-16 pb-8 border-t-4 border-ku-gold relative overflow-hidden">
-                <div className="absolute inset-0 opacity-5" style={{backgroundImage:'url(/src/assets/images/3d_bg.png)', backgroundSize:'cover'}}></div>
+                <div className="absolute inset-0 opacity-5" style={{backgroundImage:'url(/assets/images/3d_bg.png)', backgroundSize:'cover'}}></div>
                 <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-ku-gold blur-[120px] opacity-10"></div>
                 <div className="relative z-10 container mx-auto px-6">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">

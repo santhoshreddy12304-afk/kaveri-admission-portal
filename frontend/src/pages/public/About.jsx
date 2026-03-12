@@ -12,8 +12,8 @@ const About = () => {
     ];
 
     const leadership = [
-        { name: 'Shri G.V. Bhaskar Rao', role: 'Founder Chancellor', img: '/src/assets/images/gallery_114.jpeg', desc: 'Visionary leader and agriculturist who established Kaveri University to bridge technology and agriculture.' },
-        { name: 'Dr. V. Praveen Rao', role: 'Vice-Chancellor', img: '/src/assets/images/gallery_122.jpeg', desc: 'Distinguished agricultural scientist and former VC of PJTSAU, bringing global research standards to our campus.' },
+        { name: 'Shri G.V. Bhaskar Rao', role: 'Founder Chancellor', img: '/assets/images/gallery_114.jpeg', desc: 'Visionary leader and agriculturist who established Kaveri University to bridge technology and agriculture.' },
+        { name: 'Dr. V. Praveen Rao', role: 'Vice-Chancellor', img: '/assets/images/gallery_122.jpeg', desc: 'Distinguished agricultural scientist and former VC of PJTSAU, bringing global research standards to our campus.' },
     ];
 
     const collaborations = [
@@ -26,7 +26,7 @@ const About = () => {
         <div className="min-h-screen">
             {/* Hero */}
             <section className="relative py-24 overflow-hidden bg-gradient-to-br from-ku-blue via-blue-900 to-slate-900">
-                <div className="absolute inset-0 opacity-20" style={{backgroundImage:'url(/src/assets/images/gallery_121.jpeg)', backgroundSize:'cover', backgroundPosition:'center'}}></div>
+                <div className="absolute inset-0 opacity-20" style={{backgroundImage:'url(/assets/images/gallery_121.jpeg)', backgroundSize:'cover', backgroundPosition:'center'}}></div>
                 <div className="absolute inset-0 bg-ku-blue/60"></div>
                 <div className="relative z-10 text-center text-white px-4">
                     <p className="text-ku-gold font-black uppercase tracking-[0.3em] text-sm mb-4">Est. 2012 · Telangana, India</p>
@@ -39,7 +39,7 @@ const About = () => {
             <section className="container mx-auto px-4 py-20">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div className="rounded-3xl overflow-hidden shadow-2xl hover-tilt">
-                        <img src="/src/assets/images/gallery_120.jpeg" alt="Kaveri University Campus" className="w-full h-96 object-cover" />
+                        <img src="/assets/images/gallery_120.jpeg" alt="Kaveri University Campus" className="w-full h-96 object-cover" />
                     </div>
                     <div>
                         <p className="text-ku-gold font-black uppercase tracking-[0.3em] text-sm mb-4">Our Foundation</p>
@@ -147,7 +147,7 @@ const About = () => {
             {/* CTA */}
             <section className="container mx-auto px-4 py-8 pb-20">
                 <div className="bg-gradient-to-r from-ku-blue to-blue-800 rounded-3xl p-12 text-center text-white relative overflow-hidden">
-                    <div className="absolute inset-0 opacity-10" style={{backgroundImage:'url(/src/assets/images/gallery_113.jpeg)', backgroundSize:'cover'}}></div>
+                    <div className="absolute inset-0 opacity-10" style={{backgroundImage:'url(/assets/images/gallery_113.jpeg)', backgroundSize:'cover'}}></div>
                     <div className="relative z-10">
                         <h2 className="text-4xl font-black mb-4">Be Part of the Kaveri Story</h2>
                         <p className="text-gray-300 text-lg mb-8 max-w-xl mx-auto">Join thousands of students shaping the future at Kaveri University.</p>

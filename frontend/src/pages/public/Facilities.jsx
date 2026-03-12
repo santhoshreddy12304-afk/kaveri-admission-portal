@@ -6,24 +6,24 @@ const facilitiesData = [
         category: 'Academic Facilities',
         icon: '🎓',
         items: [
-            { name: 'Smart Classrooms', desc: 'Air-conditioned rooms with smart boards, projectors, and high-speed Wi-Fi for interactive learning.', img: '/src/assets/images/gallery_115.jpeg' },
-            { name: 'Digital Library', desc: 'Access to 50,000+ books, e-journals, and research databases including IEEE and Scopus.', img: '/src/assets/images/gallery_122.jpeg' },
+            { name: 'Smart Classrooms', desc: 'Air-conditioned rooms with smart boards, projectors, and high-speed Wi-Fi for interactive learning.', img: '/assets/images/gallery_115.jpeg' },
+            { name: 'Digital Library', desc: 'Access to 50,000+ books, e-journals, and research databases including IEEE and Scopus.', img: '/assets/images/gallery_122.jpeg' },
         ]
     },
     {
         category: 'Research & Labs',
         icon: '🔬',
         items: [
-            { name: 'Science Laboratories', desc: 'Modern wet labs and dry labs equipped with advanced instruments for biotechnology, chemistry, and material science.', img: '/src/assets/images/gallery_117.jpeg' },
-            { name: 'AI & Robotics Hub', desc: 'India-first AI-Robotics lab with collaborative robot arms, drone simulation, and Python/ROS development kits.', img: '/src/assets/images/gallery_121.jpeg' },
+            { name: 'Science Laboratories', desc: 'Modern wet labs and dry labs equipped with advanced instruments for biotechnology, chemistry, and material science.', img: '/assets/images/gallery_117.jpeg' },
+            { name: 'AI & Robotics Hub', desc: 'India-first AI-Robotics lab with collaborative robot arms, drone simulation, and Python/ROS development kits.', img: '/assets/images/gallery_121.jpeg' },
         ]
     },
     {
         category: 'Sports & Recreation',
         icon: '🏆',
         items: [
-            { name: 'Sports Complex', desc: 'Multi-sport facility with cricket ground, basketball & volleyball courts, and a modern gym.', img: '/src/assets/images/gallery_125.jpeg' },
-            { name: 'Campus Grounds', desc: 'Expansive green lawns, walking trails, and open amphitheater for events and relaxation.', img: '/src/assets/images/gallery_113.jpeg' },
+            { name: 'Sports Complex', desc: 'Multi-sport facility with cricket ground, basketball & volleyball courts, and a modern gym.', img: '/assets/images/gallery_125.jpeg' },
+            { name: 'Campus Grounds', desc: 'Expansive green lawns, walking trails, and open amphitheater for events and relaxation.', img: '/assets/images/gallery_113.jpeg' },
         ]
     },
 ];
@@ -34,7 +34,7 @@ const Facilities = () => {
             {/* Hero */}
             <section className="relative py-24 overflow-hidden">
                 <div className="absolute inset-0">
-                    <img src="/src/assets/images/gallery_120.jpeg" alt="Campus" className="w-full h-full object-cover" />
+                    <img src="/assets/images/gallery_120.jpeg" alt="Campus" className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-b from-ku-blue/90 to-slate-900/90"></div>
                 </div>
                 <div className="relative z-10 text-center text-white px-4">
@@ -90,7 +90,7 @@ const Facilities = () => {
 
             {/* Hostel & Residential */}
             <section className="py-20 relative overflow-hidden bg-gradient-to-br from-ku-blue to-slate-900">
-                <div className="absolute inset-0 opacity-10" style={{backgroundImage:'url(/src/assets/images/gallery_125.jpeg)', backgroundSize:'cover'}}></div>
+                <div className="absolute inset-0 opacity-10" style={{backgroundImage:'url(/assets/images/gallery_125.jpeg)', backgroundSize:'cover'}}></div>
                 <div className="relative z-10 container mx-auto px-4">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         <div className="text-white">
@@ -106,7 +106,7 @@ const Facilities = () => {
                             </ul>
                         </div>
                         <div className="rounded-3xl overflow-hidden shadow-2xl hover-tilt border-4 border-white/20">
-                            <img src="/src/assets/images/gallery_119.jpeg" alt="Residential Block" className="w-full h-96 object-cover" />
+                            <img src="/assets/images/gallery_119.jpeg" alt="Residential Block" className="w-full h-96 object-cover" />
                         </div>
                     </div>
                 </div>
@@ -116,7 +116,7 @@ const Facilities = () => {
             <section className="py-20 container mx-auto px-4">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div className="rounded-3xl overflow-hidden shadow-2xl hover-tilt group">
-                        <img src="/src/assets/images/gallery_123.jpeg" alt="Drone Academy" className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <img src="/assets/images/gallery_123.jpeg" alt="Drone Academy" className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-105" />
                     </div>
                     <div>
                         <span className="bg-ku-gold text-ku-blue font-black px-4 py-1.5 rounded-full text-xs uppercase tracking-widest mb-5 inline-block">India First</span>

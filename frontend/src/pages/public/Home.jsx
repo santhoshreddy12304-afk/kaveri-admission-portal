@@ -97,7 +97,7 @@ const Home = () => {
             {/* ─────────── HERO ─────────── */}
             <section className="relative h-[860px] flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 z-0">
-                    <img src="/src/assets/images/gallery_113.jpeg" alt="Kaveri University Campus" className="w-full h-full object-cover" />
+                    <img src="/assets/images/gallery_113.jpeg" alt="Kaveri University Campus" className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-br from-ku-blue/90 via-blue-900/80 to-slate-900/85"></div>
                 </div>
 
@@ -233,7 +233,7 @@ const Home = () => {
             {/* ─────────── SCHOLARSHIP SECTION ─────────── */}
             <section className="container mx-auto px-4 py-12">
                 <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl bg-gradient-to-br from-ku-blue via-blue-800 to-slate-900">
-                    <div className="absolute inset-0 opacity-5" style={{backgroundImage:'url(/src/assets/images/gallery_113.jpeg)', backgroundSize:'cover'}}></div>
+                    <div className="absolute inset-0 opacity-5" style={{backgroundImage:'url(/assets/images/gallery_113.jpeg)', backgroundSize:'cover'}}></div>
                     <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-ku-gold blur-[100px] opacity-15"></div>
                     <div className="relative z-10 p-10 md:p-14">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -281,16 +281,16 @@ const Home = () => {
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
                     <div className="col-span-2 row-span-2 group cursor-pointer rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative">
-                        <img src="/src/assets/images/gallery_113.jpeg" alt="Campus Aerial View" className="w-full h-full object-cover min-h-[300px] transition-transform duration-700 group-hover:scale-105" />
+                        <img src="/assets/images/gallery_113.jpeg" alt="Campus Aerial View" className="w-full h-full object-cover min-h-[300px] transition-transform duration-700 group-hover:scale-105" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end p-6">
                             <span className="text-white font-bold text-lg">Campus Aerial View — 150 Acres</span>
                         </div>
                     </div>
                     {[
-                        { src: '/src/assets/images/gallery_117.jpeg', label: 'Science Lab' },
-                        { src: '/src/assets/images/gallery_120.jpeg', label: 'Main Building' },
-                        { src: '/src/assets/images/gallery_115.jpeg', label: 'Smart Classroom' },
-                        { src: '/src/assets/images/gallery_125.jpeg', label: 'Sports Complex' },
+                        { src: '/assets/images/gallery_117.jpeg', label: 'Science Lab' },
+                        { src: '/assets/images/gallery_120.jpeg', label: 'Main Building' },
+                        { src: '/assets/images/gallery_115.jpeg', label: 'Smart Classroom' },
+                        { src: '/assets/images/gallery_125.jpeg', label: 'Sports Complex' },
                     ].map(({ src, label }) => (
                         <div key={label} className="group cursor-pointer rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1 relative h-44">
                             <img src={src} alt={label} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
@@ -340,7 +340,7 @@ const Home = () => {
             {/* ─────────── FINAL CTA ─────────── */}
             <section className="container mx-auto px-4 py-8">
                 <div className="relative rounded-[2.5rem] overflow-hidden shadow-[0_40px_80px_rgba(0,41,87,0.3)]">
-                    <img src="/src/assets/images/gallery_124.jpeg" alt="" className="absolute inset-0 w-full h-full object-cover" />
+                    <img src="/assets/images/gallery_124.jpeg" alt="" className="absolute inset-0 w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-br from-ku-blue/95 via-blue-900/90 to-slate-900/95"></div>
                     <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-ku-gold blur-[100px] opacity-20"></div>
                     <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-blue-400 blur-[100px] opacity-20"></div>

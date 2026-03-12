@@ -31,7 +31,7 @@ const Contact = () => {
         <div className="min-h-screen">
             {/* Hero */}
             <section className="relative py-24 overflow-hidden bg-gradient-to-br from-ku-blue via-blue-900 to-slate-900">
-                <div className="absolute inset-0 opacity-15" style={{backgroundImage:'url(/src/assets/images/gallery_122.jpeg)', backgroundSize:'cover', backgroundPosition:'center'}}></div>
+                <div className="absolute inset-0 opacity-15" style={{backgroundImage:'url(/assets/images/gallery_122.jpeg)', backgroundSize:'cover', backgroundPosition:'center'}}></div>
                 <div className="absolute inset-0 bg-ku-blue/70"></div>
                 <div className="relative z-10 text-center text-white px-4">
                     <p className="text-ku-gold font-black uppercase tracking-[0.3em] text-sm mb-4">We're Here for You</p>
@@ -129,7 +129,7 @@ const Contact = () => {
             {/* Map placeholder */}
             <section className="container mx-auto px-4 pb-20">
                 <div className="rounded-3xl overflow-hidden shadow-2xl bg-gray-200 h-64 flex items-center justify-center relative">
-                    <img src="/src/assets/images/gallery_123.jpeg" alt="Campus Location Map" className="w-full h-full object-cover opacity-70" />
+                    <img src="/assets/images/gallery_123.jpeg" alt="Campus Location Map" className="w-full h-full object-cover opacity-70" />
                     <div className="absolute inset-0 flex items-center justify-center">
                         <div className="bg-white/90 rounded-2xl px-8 py-6 text-center shadow-xl">
                             <p className="text-3xl mb-2">📍</p>

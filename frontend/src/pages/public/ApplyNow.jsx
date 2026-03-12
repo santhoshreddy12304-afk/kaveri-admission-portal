@@ -92,7 +92,7 @@ const ApplyNow = () => {
         <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
             {/* Header Banner */}
             <div className="bg-gradient-to-r from-ku-blue via-blue-800 to-slate-900 text-white py-16 relative overflow-hidden">
-                <div className="absolute inset-0 opacity-10" style={{backgroundImage:'url(/src/assets/images/gallery_113.jpeg)', backgroundSize:'cover', backgroundPosition:'center'}}></div>
+                <div className="absolute inset-0 opacity-10" style={{backgroundImage:'url(/assets/images/gallery_113.jpeg)', backgroundSize:'cover', backgroundPosition:'center'}}></div>
                 <div className="absolute top-0 right-0 w-64 h-64 bg-ku-gold rounded-full blur-[100px] opacity-10"></div>
                 <div className="relative z-10 text-center px-4">
                     <span className="bg-ku-gold text-ku-blue font-black px-5 py-1 rounded-full text-xs uppercase tracking-widest mb-5 inline-block">Free Application</span>

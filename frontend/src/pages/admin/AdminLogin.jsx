@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
-import logo from '../../assets/images/logo.png';
+const logo = '/assets/images/logo.png';
 
 const AdminLogin = () => {
     const [username, setUsername] = useState('');
@@ -29,7 +29,7 @@ const AdminLogin = () => {
         <div className="min-h-screen flex bg-slate-50">
             {/* Left Image Section */}
             <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-ku-blue">
-                <div className="absolute inset-0 opacity-40 mix-blend-overlay" style={{ backgroundImage: 'url(/src/assets/images/gallery_125.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+                <div className="absolute inset-0 opacity-40 mix-blend-overlay" style={{ backgroundImage: 'url(/assets/images/gallery_125.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-ku-blue via-transparent to-ku-blue/50"></div>
                 <div className="relative z-10 flex flex-col justify-between p-16 w-full h-full">
                     <img src={logo} alt="Kaveri University Logo" className="h-16 w-auto object-contain filter brightness-0 invert self-start" />
