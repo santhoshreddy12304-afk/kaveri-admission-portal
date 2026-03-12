@@ -7,12 +7,20 @@ const AdminLogin = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const { login, token } = useContext(AuthContext);
+    const [apiStatus, setApiStatus] = useState({ ok: null, msg: 'Checking connection...' });
+    const { login, token, checkApiStatus } = useContext(AuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
         if (token) navigate('/portal-command-center/dashboard');
-    }, [token, navigate]);
+        
+        // Check API connectivity on load
+        const verifyConn = async () => {
+            const status = await checkApiStatus();
+            setApiStatus(status);
+        };
+        verifyConn();
+    }, [token, navigate, checkApiStatus]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -54,7 +62,10 @@ const AdminLogin = () => {
 
                     <div className="text-center mb-10">
                         <h2 className="text-3xl font-black text-gray-800 mb-2">Admin Login</h2>
-                        <p className="text-gray-500 font-medium">Please sign in to access the dashboard</p>
+                        <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider shadow-sm ${apiStatus.ok === true ? 'bg-green-100 text-green-700' : apiStatus.ok === false ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-500'}`}>
+                            <span className={`w-2 h-2 rounded-full ${apiStatus.ok === true ? 'bg-green-500' : apiStatus.ok === false ? 'bg-red-500 animate-pulse' : 'bg-gray-300'}`}></span>
+                            {apiStatus.msg}
+                        </div>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6">

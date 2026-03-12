@@ -12,7 +12,6 @@ const campaignsRoutes = require('./routes/campaigns');
 
 const Admin = require('./models/Admin');
 const bcrypt = require('bcryptjs');
-const dotenv = require('dotenv');
 
 const app = express();
 
@@ -60,6 +59,10 @@ app.use('/api/contacts', contactsRoutes);
 app.use('/api/campaigns', campaignsRoutes);
 
 // Base route test
+app.get('/api/health', (req, res) => {
+    res.json({ status: 'ok', message: 'Kaveri University Admission API is connected & healthy' });
+});
+
 app.get('/', (req, res) => {
     res.send('Kaveri University Admission API is running...');
 });

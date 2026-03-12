@@ -53,6 +53,17 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const checkApiStatus = async () => {
+        try {
+            await axios.get('/api/health');
+            return { ok: true, msg: 'Connected to University Server' };
+        } catch (error) {
+            console.error('Connection test failed:', error);
+            const detail = error.response ? `Server responded with ${error.response.status}` : error.message;
+            return { ok: false, msg: `Connection Failed: ${detail}` };
+        }
+    };
+
     const logout = () => {
         setToken(null);
         setAdmin(null);
@@ -62,7 +73,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ token, admin, loading, login, logout }}>
+        <AuthContext.Provider value={{ token, admin, loading, login, logout, checkApiStatus }}>
             {children}
         </AuthContext.Provider>
     );
