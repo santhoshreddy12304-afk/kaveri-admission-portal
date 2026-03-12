@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const helmet = require('helmet');
 const path = require('path');
 
 // Route Imports
@@ -16,10 +15,6 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(helmet({
-    contentSecurityPolicy: false, // We handle CSP in the frontend meta tag
-    crossOriginResourcePolicy: { policy: "cross-origin" }
-}));
 app.use(cors());
 app.use(express.json());
 // Serve uploaded images statically
