@@ -32,9 +32,13 @@ const LeadsManagement = () => {
     const fetchLeads = async () => {
         try {
             const res = await axios.get('/api/leads/admin');
-            setLeads(res.data);
-            setFilteredLeads(res.data);
-        } catch (error) { toast.error('Failed to fetch leads'); }
+            const data = Array.isArray(res.data) ? res.data : [];
+            setLeads(data);
+            setFilteredLeads(data);
+        } catch (error) { 
+            console.error('Fetch leads error:', error);
+            toast.error('Failed to fetch leads'); 
+        }
         finally { setLoading(false); }
     };
 

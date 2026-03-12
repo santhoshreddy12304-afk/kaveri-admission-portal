@@ -38,12 +38,7 @@ exports.getLeads = async (req, res) => {
 exports.updateLeadStatus = async (req, res) => {
     try {
         const { status } = req.body;
-        let lead = await Lead.findById(req.params.id);
-
-        if (!lead) return res.status(404).json({ msg: 'Lead not found' });
-
-        lead.status = status;
-        await lead.save();
+        const lead = await Lead.findByIdAndUpdate(req.params.id, { status }, { new: true });
 
         res.json(lead);
     } catch (err) {

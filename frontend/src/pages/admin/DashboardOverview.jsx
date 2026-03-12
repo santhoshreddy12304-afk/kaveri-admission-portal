@@ -31,15 +31,22 @@ const DashboardOverview = () => {
         const fetch = async () => {
             try {
                 const [lr, ar] = await Promise.all([axios.get('/api/leads/admin'), axios.get('/api/campaigns/analytics')]);
+                
+                const leadsData = Array.isArray(lr.data) ? lr.data : [];
+                const analyticsData = ar.data && typeof ar.data === 'object' ? ar.data : {};
+                
                 const today = new Date().toDateString();
                 setStats({
-                    totalLeads: lr.data.length,
-                    todayLeads: lr.data.filter(l => new Date(l.createdAt).toDateString() === today).length,
-                    totalMessagesSent: ar.data.totalSent,
-                    conversionClicks: ar.data.totalClicks,
+                    totalLeads: leadsData.length,
+                    todayLeads: leadsData.filter(l => l.createdAt && new Date(l.createdAt).toDateString() === today).length,
+                    totalMessagesSent: analyticsData.totalSent || 0,
+                    conversionClicks: analyticsData.totalClicks || 0,
                 });
-                setLeads(lr.data.slice(0, 8));
-            } catch (e) { console.error(e); }
+                setLeads(leadsData.slice(0, 8));
+            } catch (e) { 
+                console.error('Dashboard data fetch error:', e);
+                toast.error('Partial data load failure');
+            }
             finally { setLoading(false); }
         };
         fetch();
