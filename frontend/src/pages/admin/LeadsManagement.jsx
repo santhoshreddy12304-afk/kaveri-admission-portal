@@ -111,8 +111,73 @@ const LeadsManagement = () => {
                 </div>
             </div>
 
-            {/* Table */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            {/* Mobile Cards (Visible on lg and below) */}
+            <div className="lg:hidden space-y-4 pb-10">
+                {loading ? (
+                    <div className="py-12 text-center text-gray-400">
+                        <div className="w-6 h-6 border-2 border-ku-blue border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+                        Loading Leads...
+                    </div>
+                ) : filteredLeads.length > 0 ? (
+                    filteredLeads.map(lead => (
+                        <div key={lead._id} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 group">
+                            <div className="flex justify-between items-start mb-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center text-ku-blue font-black flex-shrink-0 text-xl">
+                                        {(lead.fullName || '?')[0].toUpperCase()}
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-gray-800">{lead.fullName}</h4>
+                                        <p className="text-xs text-gray-400 font-medium">{new Date(lead.createdAt).toLocaleDateString()}</p>
+                                    </div>
+                                </div>
+                                <button onClick={() => handleDelete(lead._id)} className="p-2 text-gray-400 hover:text-red-500 bg-gray-50 rounded-lg">
+                                    <FiTrash2 />
+                                </button>
+                            </div>
+                            
+                            <div className="grid grid-cols-2 gap-4 mb-4">
+                                <div className="space-y-1">
+                                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Mobile</p>
+                                    <p className="text-sm font-bold text-gray-700">{lead.mobileNumber}</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Course</p>
+                                    <p className="text-sm font-bold text-ku-blue truncate" title={lead.interestedCourse}>{lead.interestedCourse}</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Location</p>
+                                    <p className="text-sm font-bold text-gray-700">{lead.city}, {lead.state}</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Percentage</p>
+                                    <p className="text-sm font-bold text-gray-700">{lead.twelfthPercentage}% (12th)</p>
+                                </div>
+                            </div>
+
+                            <div className="pt-4 border-t border-gray-100">
+                                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Lead Status</p>
+                                <select
+                                    value={lead.status}
+                                    onChange={(e) => handleStatusChange(lead._id, e.target.value)}
+                                    className={`w-full text-xs font-bold rounded-xl px-4 py-3 border outline-none cursor-pointer appearance-none ${getStatusStyle(lead.status)}`}
+                                    style={{ backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`, backgroundPosition: `right 1rem center`, backgroundRepeat: `no-repeat`, backgroundSize: `1.2em 1.2em` }}
+                                >
+                                    {statusOptions.map(s => <option key={s} value={s}>{s}</option>)}
+                                </select>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <div className="bg-white rounded-2xl p-10 text-center border border-gray-100">
+                        <FiUser className="text-4xl text-gray-200 mx-auto mb-3" />
+                        <p className="text-gray-500 font-bold">No leads found</p>
+                    </div>
+                )}
+            </div>
+
+            {/* Desktop Table (Hidden on mobile) */}
+            <div className="hidden lg:block bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left whitespace-nowrap">
                         <thead>

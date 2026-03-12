@@ -11,7 +11,7 @@ const AdminLogin = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (token) navigate('/admin/dashboard');
+        if (token) navigate('/portal-command-center/dashboard');
     }, [token, navigate]);
 
     const handleSubmit = async (e) => {
@@ -19,7 +19,7 @@ const AdminLogin = () => {
         setLoading(true);
         const success = await login(username, password);
         if (success) {
-            navigate('/admin/dashboard');
+            navigate('/portal-command-center/dashboard');
         } else {
             setLoading(false);
         }

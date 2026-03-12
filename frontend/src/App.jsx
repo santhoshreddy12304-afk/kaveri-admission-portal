@@ -54,17 +54,20 @@ function App() {
           <Route path="contact" element={<Contact />} />
         </Route>
 
-        {/* Admin Login */}
-        <Route path="/admin/login" element={<AdminLogin />} />
+        {/* Admin Login - Secure Obscured Path */}
+        <Route path="/ku-portal-gate" element={<AdminLogin />} />
 
-        {/* Admin Dashboard Routes (Protected) */}
-        <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
-          <Route index element={<Navigate to="/admin/dashboard" />} />
+        {/* Admin Dashboard Routes (Protected) - Secure Path */}
+        <Route path="/portal-command-center" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
+          <Route index element={<Navigate to="/portal-command-center/dashboard" />} />
           <Route path="dashboard" element={<DashboardOverview />} />
           <Route path="leads" element={<LeadsManagement />} />
           <Route path="upload" element={<BulkUpload />} />
           <Route path="campaigns" element={<CampaignPanel />} />
         </Route>
+
+        {/* Redirect generic /admin to login or empty */}
+        <Route path="/admin" element={<Navigate to="/ku-portal-gate" />} />
 
       </Routes>
     </Router>

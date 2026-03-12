@@ -185,9 +185,9 @@ const DashboardOverview = () => {
             {/* Quick Actions */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                    { href: '/admin/leads', label: 'Manage Leads', icon: '👥', color: 'bg-blue-50 border-blue-200 hover:bg-blue-100' },
-                    { href: '/admin/upload', label: 'Bulk Upload', icon: '📤', color: 'bg-purple-50 border-purple-200 hover:bg-purple-100' },
-                    { href: '/admin/campaigns', label: 'Send Campaign', icon: '📨', color: 'bg-green-50 border-green-200 hover:bg-green-100' },
+                    { href: '/portal-command-center/leads', label: 'Manage Leads', icon: '👥', color: 'bg-blue-50 border-blue-200 hover:bg-blue-100' },
+                    { href: '/portal-command-center/upload', label: 'Bulk Upload', icon: '📤', color: 'bg-purple-50 border-purple-200 hover:bg-purple-100' },
+                    { href: '/portal-command-center/campaigns', label: 'Send Campaign', icon: '📨', color: 'bg-green-50 border-green-200 hover:bg-green-100' },
                     { href: '/', label: 'View Website', icon: '🌐', color: 'bg-yellow-50 border-yellow-200 hover:bg-yellow-100' },
                 ].map(action => (
                     <a key={action.label} href={action.href} className={`${action.color} border rounded-2xl p-5 text-center transition-all hover:-translate-y-1 cursor-pointer`}>
