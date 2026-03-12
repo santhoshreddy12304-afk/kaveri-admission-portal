@@ -5,7 +5,7 @@ exports.createLead = async (req, res) => {
     try {
         const { fullName, mobileNumber, email, state, city, interestedCourse, twelfthPercentage, message } = req.body;
 
-        const newLead = new Lead({
+        const lead = await Lead.create({
             fullName,
             mobileNumber,
             email,
@@ -15,8 +15,6 @@ exports.createLead = async (req, res) => {
             twelfthPercentage,
             message
         });
-
-        const lead = await newLead.save();
 
         res.json(lead);
     } catch (err) {

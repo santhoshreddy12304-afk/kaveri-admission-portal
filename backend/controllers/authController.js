@@ -14,12 +14,10 @@ exports.register = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        admin = new Admin({
+        admin = await Admin.create({
             username,
             password: hashedPassword
         });
-
-        await admin.save();
 
         const payload = {
             admin: {
