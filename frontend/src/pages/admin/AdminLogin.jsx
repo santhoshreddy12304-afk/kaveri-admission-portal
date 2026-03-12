@@ -66,6 +66,11 @@ const AdminLogin = () => {
                             <span className={`w-2 h-2 rounded-full ${apiStatus.ok === true ? 'bg-green-500' : apiStatus.ok === false ? 'bg-red-500 animate-pulse' : 'bg-gray-300'}`}></span>
                             {apiStatus.msg}
                         </div>
+                        {apiStatus.ok === false && (
+                            <div className="mt-2 text-[10px] text-red-400 font-mono break-all">
+                                Target: {axios.defaults.baseURL}
+                            </div>
+                        )}
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
