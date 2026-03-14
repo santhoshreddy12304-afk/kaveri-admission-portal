@@ -1,13 +1,17 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 import { AuthContext } from '../../context/AuthContext';
+import { FiUser, FiLock, FiEye, FiEyeOff, FiShield, FiGlobe, FiCpu, FiAlertCircle, FiCheckCircle } from 'react-icons/fi';
 const logo = '/assets/images/logo.png';
 
 const AdminLogin = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [apiStatus, setApiStatus] = useState({ ok: null, msg: 'Checking connection...' });
+    const [apiStatus, setApiStatus] = useState({ ok: null, msg: 'Initializing server link...' });
     const { login, token, checkApiStatus } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -62,39 +66,57 @@ const AdminLogin = () => {
 
                     <div className="text-center mb-10">
                         <h2 className="text-3xl font-black text-gray-800 mb-2">Admin Login</h2>
-                        <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider shadow-sm ${apiStatus.ok === true ? 'bg-green-100 text-green-700' : apiStatus.ok === false ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-500'}`}>
-                            <span className={`w-2 h-2 rounded-full ${apiStatus.ok === true ? 'bg-green-500' : apiStatus.ok === false ? 'bg-red-500 animate-pulse' : 'bg-gray-300'}`}></span>
+                        <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] uppercase font-black tracking-wider shadow-sm transition-all duration-500 ${apiStatus.ok === true ? 'bg-green-100 text-green-700' : apiStatus.ok === false ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-400'}`}>
+                            {apiStatus.ok === true ? <FiCheckCircle className="animate-bounce" /> : apiStatus.ok === false ? <FiAlertCircle className="animate-pulse" /> : <FiCpu className="animate-spin" />}
                             {apiStatus.msg}
                         </div>
                         {apiStatus.ok === false && (
-                            <div className="mt-2 text-[10px] text-red-400 font-mono break-all">
-                                Target: {axios.defaults.baseURL}
+                            <div className="mt-2 text-[10px] text-red-400 font-mono break-all bg-red-50 p-2 rounded-lg">
+                                Target Server: {axios.defaults.baseURL}
                             </div>
                         )}
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
-                        <div>
+                        <div className="relative group">
                             <label className="block text-gray-700 font-bold mb-2 text-sm ml-1">Username</label>
-                            <input
-                                type="text"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                className="w-full px-5 py-4 rounded-2xl border-2 border-gray-100 focus:border-ku-blue outline-none transition bg-white/70 font-medium text-gray-800"
-                                placeholder="Enter admin username"
-                                required
-                            />
+                            <div className="relative">
+                                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-ku-blue transition-colors">
+                                    <FiUser size={20} />
+                                </span>
+                                <input
+                                    type="text"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    className="w-full pl-14 pr-5 py-4 rounded-2xl border-2 border-gray-100 focus:border-ku-blue focus:ring-4 focus:ring-blue-100 outline-none transition bg-white/70 font-medium text-gray-800"
+                                    placeholder="Admin Username"
+                                    required
+                                />
+                            </div>
                         </div>
-                        <div>
+
+                        <div className="relative group">
                             <label className="block text-gray-700 font-bold mb-2 text-sm ml-1">Password</label>
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="w-full px-5 py-4 rounded-2xl border-2 border-gray-100 focus:border-ku-blue outline-none transition bg-white/70 font-medium text-gray-800"
-                                placeholder="Enter password"
-                                required
-                            />
+                            <div className="relative">
+                                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-ku-blue transition-colors">
+                                    <FiLock size={20} />
+                                </span>
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className="w-full pl-14 pr-14 py-4 rounded-2xl border-2 border-gray-100 focus:border-ku-blue focus:ring-4 focus:ring-blue-100 outline-none transition bg-white/70 font-medium text-gray-800"
+                                    placeholder="••••••••"
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-ku-blue transition-colors"
+                                >
+                                    {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+                                </button>
+                            </div>
                         </div>
 
                         <button

@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import { FiCheckCircle, FiClock, FiAward, FiPhoneCall, FiMessageSquare, FiFileText } from 'react-icons/fi';
 
 const courses = [
     // Engineering
@@ -13,8 +14,6 @@ const courses = [
     "M.Sc Genetics & Plant Breeding", "M.Sc Entomology", "Ph.D. Agriculture",
     // Management
     "BBA General", "MBA General", "MBA Finance", "MBA Marketing", "MBA HRM",
-    // Sciences
-    "B.Sc Nursing", "B.Sc Paramedical", "B.Sc Nutrition & Dietetics", "M.Sc Nursing",
 ];
 
 const states = [
@@ -98,11 +97,16 @@ const ApplyNow = () => {
                     <span className="bg-ku-gold text-ku-blue font-black px-5 py-1 rounded-full text-xs uppercase tracking-widest mb-5 inline-block">Free Application</span>
                     <h1 className="text-5xl font-black mb-4">Apply for <span className="text-ku-gold">Admission 2026-27</span></h1>
                     <p className="text-gray-300 text-lg max-w-xl mx-auto">Fill the form and get a call from our counsellor within 24 hours. It's FREE and takes 2 minutes.</p>
-                    <div className="flex justify-center gap-8 mt-8 text-center">
-                        {[['🆓', 'Free to Apply'], ['⚡', '24hr Callback'], ['🎓', 'Scholarship Check'], ['📞', 'Expert Guidance']].map(([icon, label]) => (
-                            <div key={label} className="text-center">
-                                <div className="text-2xl mb-1">{icon}</div>
-                                <div className="text-xs text-gray-300 font-bold">{label}</div>
+                    <div className="flex justify-center gap-10 mt-8 text-center">
+                        {[
+                            { icon: <FiCheckCircle />, label: 'Free to Apply' },
+                            { icon: <FiClock />, label: '24hr Callback' },
+                            { icon: <FiAward />, label: 'Scholarship Check' },
+                            { icon: <FiPhoneCall />, label: 'Expert Guidance' }
+                        ].map(({ icon, label }) => (
+                            <div key={label} className="text-center group">
+                                <div className="text-3xl mb-2 text-ku-gold flex justify-center group-hover:scale-110 transition-transform">{icon}</div>
+                                <div className="text-[10px] text-gray-300 font-black uppercase tracking-widest">{label}</div>
                             </div>
                         ))}
                     </div>

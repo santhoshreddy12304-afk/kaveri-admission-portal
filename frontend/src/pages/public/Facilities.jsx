@@ -1,29 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FiBookOpen, FiCpu, FiDribbble, FiShield, FiWifi, FiCoffee, FiTruck, FiActivity } from 'react-icons/fi';
+import { GraduationCap, Microscope, Trophy } from 'lucide-react';
 
 const facilitiesData = [
     {
         category: 'Academic Facilities',
-        icon: '🎓',
+        icon: <GraduationCap />,
         items: [
-            { name: 'Smart Classrooms', desc: 'Air-conditioned rooms with smart boards, projectors, and high-speed Wi-Fi for interactive learning.', img: '/assets/images/gallery_115.jpeg' },
+            { name: 'Smart Classrooms', desc: 'Air-conditioned rooms with smart boards, projectors, and high-speed Wi-Fi for interactive learning.', img: '/assets/images/lecture_hall.png' },
             { name: 'Digital Library', desc: 'Access to 50,000+ books, e-journals, and research databases including IEEE and Scopus.', img: '/assets/images/gallery_122.jpeg' },
         ]
     },
     {
         category: 'Research & Labs',
-        icon: '🔬',
+        icon: <Microscope />,
         items: [
-            { name: 'Science Laboratories', desc: 'Modern wet labs and dry labs equipped with advanced instruments for biotechnology, chemistry, and material science.', img: '/assets/images/gallery_117.jpeg' },
-            { name: 'AI & Robotics Hub', desc: 'India-first AI-Robotics lab with collaborative robot arms, drone simulation, and Python/ROS development kits.', img: '/assets/images/gallery_121.jpeg' },
+            { name: 'Science Laboratories', desc: 'Modern wet labs and dry labs equipped with advanced instruments for biotechnology, chemistry, and material science.', img: '/assets/images/science_lab.png' },
+            { name: 'AI & Robotics Hub', desc: 'India-first AI-Robotics lab with collaborative robot arms, drone simulation, and Python/ROS development kits.', img: '/assets/images/robotics_lab.png' },
         ]
     },
     {
         category: 'Sports & Recreation',
-        icon: '🏆',
+        icon: <Trophy />,
         items: [
             { name: 'Sports Complex', desc: 'Multi-sport facility with cricket ground, basketball & volleyball courts, and a modern gym.', img: '/assets/images/gallery_125.jpeg' },
-            { name: 'Campus Grounds', desc: 'Expansive green lawns, walking trails, and open amphitheater for events and relaxation.', img: '/assets/images/gallery_113.jpeg' },
+            { name: 'Campus Grounds', desc: 'Expansive green lawns, walking trails, and open amphitheater for events and relaxation.', img: '/assets/images/campus_main.png' },
         ]
     },
 ];
@@ -68,8 +70,8 @@ const Facilities = () => {
                 <section key={catIdx} className={`py-20 ${catIdx % 2 === 1 ? 'bg-gray-50' : 'bg-white'}`}>
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-14">
-                            <span className="text-4xl">{cat.icon}</span>
-                            <h2 className="text-4xl font-black text-ku-blue mt-4 mb-2">{cat.category}</h2>
+                            <span className="text-4xl text-ku-gold mb-4 inline-block">{cat.icon}</span>
+                            <h2 className="text-4xl font-black text-ku-blue mb-2">{cat.category}</h2>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                             {cat.items.map((item, i) => (

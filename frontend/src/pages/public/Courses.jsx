@@ -44,17 +44,6 @@ const Courses = () => {
                 { name: "MBA Marketing", duration: "2 Years", seats: 60 },
                 { name: "MBA HRM", duration: "2 Years", seats: 60 },
             ]
-        },
-        {
-            faculty: "School of Allied Health Sciences",
-            icon: "🏥",
-            color: "from-red-500 to-red-700",
-            courses: [
-                { name: "B.Sc Nursing", duration: "4 Years", seats: 60, highlight: true },
-                { name: "B.Sc Paramedical", duration: "4 Years", seats: 60 },
-                { name: "B.Sc Nutrition & Dietetics", duration: "4 Years", seats: 60 },
-                { name: "M.Sc Nursing", duration: "2 Years", seats: 30 }
-            ]
         }
     ];
 
@@ -67,7 +56,7 @@ const Courses = () => {
                 <div className="relative z-10 text-center text-white px-4">
                     <p className="text-ku-gold font-black uppercase tracking-[0.3em] text-sm mb-4">Admissions 2026-27</p>
                     <h1 className="text-6xl md:text-7xl font-black mb-6">Academic <span className="text-ku-gold">Programs</span></h1>
-                    <p className="text-xl text-gray-300 max-w-2xl mx-auto">Explore 20+ comprehensive undergraduate and postgraduate programs across 4 elite schools.</p>
+                    <p className="text-xl text-gray-300 max-w-2xl mx-auto">Explore 20+ comprehensive undergraduate and postgraduate programs across 3 elite schools.</p>
                 </div>
             </section>
 

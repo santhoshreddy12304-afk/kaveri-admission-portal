@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { FiUsers, FiMessageCircle, FiTrendingUp, FiMousePointer, FiCalendar, FiActivity, FiExternalLink } from 'react-icons/fi';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Legend } from 'recharts';
 import { AuthContext } from '../../context/AuthContext';
@@ -38,7 +39,7 @@ const DashboardOverview = () => {
                 const today = new Date().toDateString();
                 setStats({
                     totalLeads: leadsData.length,
-                    todayLeads: leadsData.filter(l => l.createdAt && new Date(l.createdAt).toDateString() === today).length,
+                    todayLeads: leadsData.filter(l => l && l.createdAt && new Date(l.createdAt).toDateString() === today).length,
                     totalMessagesSent: analyticsData.totalSent || 0,
                     conversionClicks: analyticsData.totalClicks || 0,
                 });
@@ -166,7 +167,7 @@ const DashboardOverview = () => {
                         <div className="space-y-3">{[1,2,3].map(i => <div key={i} className="h-10 bg-gray-100 animate-pulse rounded-xl" />)}</div>
                     ) : (
                         <div className="space-y-3 overflow-auto max-h-48">
-                            {leads.map((lead, i) => (
+                            {leads.map((lead, i) => lead && (
                                 <div key={i} className="flex items-center justify-between bg-gray-50 rounded-xl px-4 py-3">
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 bg-gradient-to-br from-ku-blue to-blue-700 rounded-lg flex items-center justify-center text-white text-xs font-black">

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FiFileText, FiPhoneCall, FiCheckCircle, FiEdit3 } from 'react-icons/fi';
+import { ClipboardList } from 'lucide-react';
 
 const AdmissionProcess = () => {
     const [activeStep, setActiveStep] = useState(0);
@@ -9,7 +11,7 @@ const AdmissionProcess = () => {
             step: "Step 1", 
             title: "Submit Enquiry Form", 
             desc: "Fill out the online application form with your basic details, academic records, and preferred course.",
-            icon: "📝",
+            icon: <FiEdit3 />,
             action: "Start Application →",
             link: "/apply"
         },
@@ -17,7 +19,7 @@ const AdmissionProcess = () => {
             step: "Step 2", 
             title: "Counselling Call", 
             desc: "Our admission experts will call you within 24 hours to check eligibility, explain scholarships, and guide you.",
-            icon: "📞",
+            icon: <FiPhoneCall />,
             action: "WhatsApp Us",
             link: "https://wa.me/919666041795"
         },
@@ -25,13 +27,13 @@ const AdmissionProcess = () => {
             step: "Step 3", 
             title: "Document Review", 
             desc: "Submit your 10th and 12th/IPE marksheets online. We process your merit scholarship based on these scores.",
-            icon: "📄"
+            icon: <FiFileText />
         },
         { 
             step: "Step 4", 
             title: "Seat Confirmation", 
             desc: "Pay the initial admission fee of ₹25,000 to secure your seat. Congratulations, you are now part of Kaveri University!",
-            icon: "✅"
+            icon: <FiCheckCircle />
         }
     ];
 
@@ -97,11 +99,11 @@ const AdmissionProcess = () => {
                     </div>
 
                     {/* Step Illustration / Info Card */}
-                    <div className="glass-card rounded-[2.5rem] p-10 bg-gradient-to-br from-ku-blue to-blue-900 text-white shadow-2xl relative overflow-hidden h-full flex flex-col justify-center">
+                    <div className="glass-card rounded-[2.5rem] p-10 bg-gradient-to-br from-ku-blue to-blue-900 text-white shadow-2xl relative overflow-hidden h-full flex flex-col justify-center min-h-[400px]">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-ku-gold rounded-full blur-[80px] opacity-20 transform translate-x-1/2 -translate-y-1/2"></div>
                         
                         <div className="relative z-10 text-center">
-                            <div className="text-8xl mb-8 animate-bounce">{steps[activeStep].icon}</div>
+                            <div className="text-ku-gold text-8xl mb-8 flex justify-center">{steps[activeStep].icon}</div>
                             <h3 className="text-3xl font-black mb-4">{steps[activeStep].title}</h3>
                             <p className="text-blue-100 text-lg leading-relaxed">{steps[activeStep].desc}</p>
                         </div>
@@ -114,7 +116,7 @@ const AdmissionProcess = () => {
                 <div className="container mx-auto px-4 max-w-4xl">
                     <div className="bg-white rounded-3xl shadow-xl p-10 md:p-14 border-t-8 border-ku-gold hover-tilt">
                         <div className="flex items-center gap-4 mb-8">
-                            <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-3xl">🗂️</div>
+                            <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-3xl text-ku-gold"><ClipboardList size={40} /></div>
                             <div>
                                 <h3 className="text-3xl font-black text-ku-blue">Document Checklist</h3>
                                 <p className="text-gray-500 font-medium text-lg">Keep these ready for enrollment.</p>
@@ -127,10 +129,6 @@ const AdmissionProcess = () => {
                                     <span className="text-gray-700 font-bold">{req}</span>
                                 </div>
                             ))}
-                        </div>
-                        <div className="mt-8 bg-blue-50 text-blue-800 p-4 rounded-xl text-sm font-medium border border-blue-100">
-                            <strong>Note:</strong> Original documents must be produced during physical reporting at the campus. 
-                            Initial verification can be done via scanned copies on WhatsApp.
                         </div>
                     </div>
                 </div>

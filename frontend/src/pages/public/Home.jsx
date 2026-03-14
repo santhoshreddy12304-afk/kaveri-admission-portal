@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { 
+  FiMessageCircle, FiBook, FiAward, FiUsers, FiGlobe, 
+  FiCpu, FiCheckCircle, FiShield, FiNavigation, FiPhoneCall, FiExternalLink, FiArrowRight 
+} from 'react-icons/fi';
+import { GraduationCap, Landmark, Microscope, Activity } from 'lucide-react';
 
 // Animated counter hook
 const useCounter = (end, duration = 2000, trigger) => {
@@ -58,19 +63,18 @@ const Home = () => {
     }, []);
 
     const programs = [
-        { school: 'Engineering & Technology', icon: '⚙️', color: 'from-blue-600 to-blue-800', courses: ['B.Tech CSE (Core)', 'B.Tech AI & ML', 'B.Tech CSE - Robotics', 'B.Tech CSE - Cyber Security', 'B.Tech CSE - IoT', 'B.Tech ECE', 'M.Tech CSE/AI&ML', 'Ph.D. (CSE)'] },
-        { school: 'Agriculture', icon: '🌾', color: 'from-green-600 to-green-800', courses: ['B.Sc (Hons.) Agriculture', 'B.Sc (Hons.) Horticulture', 'M.Sc Agronomy', 'M.Sc Genetics & Plant Breeding', 'Ph.D. in Agriculture Sciences'] },
-        { school: 'Management Studies', icon: '📊', color: 'from-purple-600 to-purple-800', courses: ['BBA General', 'MBA General', 'MBA Finance', 'MBA Marketing', 'MBA HR'] },
-        { school: 'Allied Health Sciences', icon: '🏥', color: 'from-red-500 to-red-700', courses: ['B.Sc Nursing', 'B.Sc Paramedical', 'B.Sc Nutrition & Dietetics', 'M.Sc Nursing'] },
+        { school: 'Engineering & Technology', icon: <FiCpu />, color: 'from-blue-600 to-blue-800', courses: ['B.Tech CSE (Core)', 'B.Tech AI & ML', 'B.Tech CSE - Robotics', 'B.Tech CSE - Cyber Security', 'B.Tech CSE - IoT', 'B.Tech ECE', 'M.Tech CSE/AI&ML', 'Ph.D. (CSE)'] },
+        { school: 'Agriculture', icon: <Microscope />, color: 'from-green-600 to-green-800', courses: ['B.Sc (Hons.) Agriculture', 'B.Sc (Hons.) Horticulture', 'M.Sc Agronomy', 'M.Sc Genetics & Plant Breeding', 'Ph.D. in Agriculture Sciences'] },
+        { school: 'Management Studies', icon: <Landmark />, color: 'from-purple-600 to-purple-800', courses: ['BBA General', 'MBA General', 'MBA Finance', 'MBA Marketing', 'MBA HR'] },
     ];
 
     const whyUs = [
-        { icon: '🎓', title: 'Merit Scholarships', desc: 'Up to 75% scholarship for 90%+ IPE marks. Pay as low as ₹75,000/semester instead of ₹3 Lakhs.', highlight: true },
-        { icon: '🌍', title: 'Global Collaborations', desc: 'Partnerships with University of Florida, ICRISAT, and Fraunhofer Institute for world-class research.' },
-        { icon: '🤖', title: 'Drone & AI Academy', desc: 'India\'s unique Drone Training Academy + AI-Robotics Hub — industry-first learning experiences.' },
-        { icon: '🏭', title: '95% Placement', desc: 'Strong industry network with MNC tie-ups. Dedicated placement cell from Day 1 of your course.' },
-        { icon: '🌱', title: '150-Acre Green Campus', desc: 'Riverside eco-campus with world-class infrastructure — hostels, sports, labs, and digital library.' },
-        { icon: '👨‍🎓', title: 'Expert Faculty', desc: '150+ distinguished faculty members with PhD qualifications and industry experience.' },
+        { icon: <FiAward />, title: 'Merit Scholarships', desc: 'Up to 75% scholarship for 90%+ IPE marks. Pay as low as ₹75,000/semester instead of ₹3 Lakhs.', highlight: true },
+        { icon: <FiGlobe />, title: 'Global Collaborations', desc: 'Partnerships with University of Florida, ICRISAT, and Fraunhofer Institute for world-class research.' },
+        { icon: <FiNavigation />, title: 'Drone & AI Academy', desc: 'India\'s unique Drone Training Academy + AI-Robotics Hub — industry-first learning experiences.' },
+        { icon: <FiCheckCircle />, title: '95% Placement', desc: 'Strong industry network with MNC tie-ups. Dedicated placement cell from Day 1 of your course.' },
+        { icon: <Landmark />, title: '150-Acre Green Campus', desc: 'Riverside eco-campus with world-class infrastructure — hostels, sports, labs, and digital library.' },
+        { icon: <FiUsers />, title: 'Expert Faculty', desc: '150+ distinguished faculty members with PhD qualifications and industry experience.' },
     ];
 
     return (
@@ -97,14 +101,14 @@ const Home = () => {
             {/* ─────────── HERO ─────────── */}
             <section className="relative h-[860px] flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 z-0">
-                    <img src="/assets/images/gallery_113.jpeg" alt="Kaveri University Campus" className="w-full h-full object-cover" />
+                    <img src="/assets/images/campus_main.png" alt="Kaveri University Campus" className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-br from-ku-blue/90 via-blue-900/80 to-slate-900/85"></div>
                 </div>
 
                 <div className="relative z-20 text-center text-white px-4 max-w-6xl w-full">
                     {/* Admission badge */}
                     <span className="bg-gradient-to-r from-ku-gold to-yellow-400 text-ku-blue font-black px-6 py-2 rounded-full text-sm uppercase tracking-widest mb-8 inline-block shadow-[0_10px_30px_rgba(255,191,0,0.5)] floating-3d">
-                        🎓 Admissions 2026-27 Now Open
+                        <GraduationCap className="inline-block mr-2 -mt-1" /> Admissions 2026-27 Now Open
                     </span>
 
                     <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight drop-shadow-2xl">
@@ -192,7 +196,7 @@ const Home = () => {
                             {item.highlight && (
                                 <div className="absolute top-4 right-4 bg-ku-gold text-ku-blue text-xs font-black px-3 py-1 rounded-full uppercase">🔥 Most Popular</div>
                             )}
-                            <div className="text-5xl mb-5">{item.icon}</div>
+                            <div className="text-5xl mb-5 text-ku-gold">{item.icon}</div>
                             <h3 className="text-xl font-black text-ku-blue mb-3">{item.title}</h3>
                             <p className="text-gray-600 leading-relaxed font-medium">{item.desc}</p>
                         </div>
@@ -212,8 +216,11 @@ const Home = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
                         {programs.map((prog, i) => (
                             <div key={i} className={`bg-gradient-to-br ${prog.color} rounded-3xl p-6 text-white shadow-xl hover-tilt group`}>
-                                <div className="text-5xl mb-4">{prog.icon}</div>
-                                <h3 className="text-xl font-black mb-4 leading-tight">School of {prog.school}</h3>
+                             <div className="flex items-center justify-between mb-4">
+                                <div className="text-5xl text-white/90">{prog.icon}</div>
+                                <div className="bg-white/20 p-2 rounded-xl"><FiArrowRight /></div>
+                             </div>
+                             <h3 className="text-xl font-black mb-4 leading-tight">School of {prog.school}</h3>
                                 <ul className="space-y-2 mb-6">
                                     {prog.courses.map((c, j) => (
                                         <li key={j} className="text-white/80 text-sm font-medium flex items-start gap-2">

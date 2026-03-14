@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FiTarget, FiSunrise, FiZap, FiGlobe, FiMapPin, FiAnchor } from 'react-icons/fi';
+import { Milestone, Flag, Compass } from 'lucide-react';
 
 const About = () => {
     const timeline = [
@@ -17,10 +19,11 @@ const About = () => {
     ];
 
     const collaborations = [
-        { name: 'University of Florida', country: '🇺🇸 USA', desc: 'Joint research programs in agriculture and biotechnology.' },
-        { name: 'ICRISAT', country: '🌍 International', desc: 'International Crops Research Institute partnership for agricultural innovation.' },
-        { name: 'Fraunhofer Institute', country: '🇩🇪 Germany', desc: 'Technology transfer and engineering research collaboration.' },
+        { name: 'University of Florida', country: 'USA', icon: <FiGlobe />, desc: 'Joint research programs in agriculture and biotechnology.' },
+        { name: 'ICRISAT', country: 'International', icon: <FiAnchor />, desc: 'International Crops Research Institute partnership for agricultural innovation.' },
+        { name: 'Fraunhofer Institute', country: 'Germany', icon: <FiMapPin />, desc: 'Technology transfer and engineering research collaboration.' },
     ];
+
 
     return (
         <div className="min-h-screen">
@@ -62,12 +65,12 @@ const About = () => {
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {[
-                            { icon: '🌟', title: 'Our Vision', text: 'To be a globally recognized center of excellence in education, research, and innovation, producing socially responsible leaders.' },
-                            { icon: '🎯', title: 'Our Mission', text: 'To impart quality education, foster research, and develop competent professionals with ethical values, global perspective, and leadership skills.' },
-                            { icon: '💡', title: 'Our Philosophy', text: 'We believe in holistic education — beyond textbooks, focusing on character building, entrepreneurship, and real-world problem solving.' },
+                            { icon: <FiTarget />, title: 'Our Vision', text: 'To be a globally recognized center of excellence in education, research, and innovation, producing socially responsible leaders.' },
+                            { icon: <Flag />, title: 'Our Mission', text: 'To impart quality education, foster research, and develop competent professionals with ethical values, global perspective, and leadership skills.' },
+                            { icon: <FiZap />, title: 'Our Philosophy', text: 'We believe in holistic education — beyond textbooks, focusing on character building, entrepreneurship, and real-world problem solving.' },
                         ].map((item, i) => (
                             <div key={i} className="glass-card rounded-3xl p-8 hover-tilt text-white">
-                                <div className="text-5xl mb-5">{item.icon}</div>
+                                <div className="text-5xl mb-5 text-ku-gold">{item.icon}</div>
                                 <h3 className="text-2xl font-black mb-4 text-ku-gold">{item.title}</h3>
                                 <p className="text-gray-300 leading-relaxed">{item.text}</p>
                             </div>
@@ -135,7 +138,7 @@ const About = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {collaborations.map((c, i) => (
                         <div key={i} className="glass-card rounded-3xl p-8 hover-tilt text-center">
-                            <div className="text-4xl mb-4">{c.country.split(' ')[0]}</div>
+                            <span className="text-4xl text-ku-gold mb-4 inline-block">{c.icon}</span>
                             <h3 className="text-xl font-black text-ku-blue mb-2">{c.name}</h3>
                             <p className="text-ku-gold font-bold text-sm mb-4">{c.country}</p>
                             <p className="text-gray-600 leading-relaxed">{c.desc}</p>

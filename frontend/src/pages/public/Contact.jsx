@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { FiPhone, FiMail, FiMapPin, FiGlobe, FiClock, FiCheckCircle } from 'react-icons/fi';
 
 const Contact = () => {
     const [form, setForm] = useState({ fullName: '', mobileNumber: '', email: '', message: '', interestedCourse: '' });
@@ -21,10 +22,10 @@ const Contact = () => {
     };
 
     const contacts = [
-        { icon: '📞', title: 'Call Us', details: ['9666041795', '9392939698'], sub: 'Mon – Sat, 9am to 6pm', href: 'tel:9666041795' },
-        { icon: '📧', title: 'Email Us', details: ['admissions@kaveriuniversity.edu.in'], sub: 'We reply within 24 hours', href: 'mailto:admissions@kaveriuniversity.edu.in' },
-        { icon: '📍', title: 'Campus Address', details: ['Gowraram Village, Wargal', 'Hyderabad, Telangana – 502279'], sub: 'NH-44, Near Gowraram Toll', href: null },
-        { icon: '🌐', title: 'Website', details: ['www.kaveriuniversity.edu.in'], sub: 'Admissions portal online', href: 'https://www.kaveriuniversity.edu.in' },
+        { icon: <FiPhone />, title: 'Call Us', details: ['9666041795', '9392939698'], sub: 'Mon – Sat, 9am to 6pm', href: 'tel:9666041795' },
+        { icon: <FiMail />, title: 'Email Us', details: ['admissions@kaveriuniversity.edu.in'], sub: 'We reply within 24 hours', href: 'mailto:admissions@kaveriuniversity.edu.in' },
+        { icon: <FiMapPin />, title: 'Campus Address', details: ['Gowraram Village, Wargal', 'Hyderabad, Telangana – 502279'], sub: 'NH-44, Near Gowraram Toll', href: null },
+        { icon: <FiGlobe />, title: 'Website', details: ['www.kaveriuniversity.edu.in'], sub: 'Admissions portal online', href: 'https://www.kaveriuniversity.edu.in' },
     ];
 
     return (
@@ -45,7 +46,7 @@ const Contact = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-16">
                     {contacts.map((c, i) => (
                         <div key={i} className="glass-card rounded-3xl p-8 hover-tilt text-center">
-                            <div className="text-5xl mb-4">{c.icon}</div>
+                            <div className="text-5xl mb-4 text-ku-gold flex justify-center">{c.icon}</div>
                             <h3 className="font-black text-ku-blue text-lg mb-3">{c.title}</h3>
                             {c.details.map((d, j) => (
                                 c.href ? (

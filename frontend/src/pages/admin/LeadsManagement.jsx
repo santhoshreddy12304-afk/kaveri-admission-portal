@@ -123,7 +123,7 @@ const LeadsManagement = () => {
                         Loading Leads...
                     </div>
                 ) : filteredLeads.length > 0 ? (
-                    filteredLeads.map(lead => (
+                    filteredLeads.map(lead => lead && (
                         <div key={lead._id} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 group">
                             <div className="flex justify-between items-start mb-4">
                                 <div className="flex items-center gap-3">
@@ -131,8 +131,8 @@ const LeadsManagement = () => {
                                         {(lead.fullName || '?')[0].toUpperCase()}
                                     </div>
                                     <div>
-                                        <h4 className="font-bold text-gray-800">{lead.fullName}</h4>
-                                        <p className="text-xs text-gray-400 font-medium">{new Date(lead.createdAt).toLocaleDateString()}</p>
+                                        <h4 className="font-bold text-gray-800">{lead.fullName || 'Unknown'}</h4>
+                                        <p className="text-xs text-gray-400 font-medium">{lead.createdAt ? new Date(lead.createdAt).toLocaleDateString() : '—'}</p>
                                     </div>
                                 </div>
                                 <button onClick={() => handleDelete(lead._id)} className="p-2 text-gray-400 hover:text-red-500 bg-gray-50 rounded-lg">
@@ -143,19 +143,19 @@ const LeadsManagement = () => {
                             <div className="grid grid-cols-2 gap-4 mb-4">
                                 <div className="space-y-1">
                                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Mobile</p>
-                                    <p className="text-sm font-bold text-gray-700">{lead.mobileNumber}</p>
+                                    <p className="text-sm font-bold text-gray-700">{lead.mobileNumber || '—'}</p>
                                 </div>
                                 <div className="space-y-1">
                                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Course</p>
-                                    <p className="text-sm font-bold text-ku-blue truncate" title={lead.interestedCourse}>{lead.interestedCourse}</p>
+                                    <p className="text-sm font-bold text-ku-blue truncate" title={lead.interestedCourse}>{lead.interestedCourse || '—'}</p>
                                 </div>
                                 <div className="space-y-1">
                                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Location</p>
-                                    <p className="text-sm font-bold text-gray-700">{lead.city}, {lead.state}</p>
+                                    <p className="text-sm font-bold text-gray-700">{lead.city || ''}, {lead.state || ''}</p>
                                 </div>
                                 <div className="space-y-1">
                                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Percentage</p>
-                                    <p className="text-sm font-bold text-gray-700">{lead.twelfthPercentage}% (12th)</p>
+                                    <p className="text-sm font-bold text-gray-700">{lead.twelfthPercentage || '0'}% (12th)</p>
                                 </div>
                             </div>
 
@@ -198,7 +198,7 @@ const LeadsManagement = () => {
                             {loading ? (
                                 <tr><td colSpan="6" className="py-12 text-center text-gray-400"><div className="w-6 h-6 border-2 border-ku-blue border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>Loading Database...</td></tr>
                             ) : filteredLeads.length > 0 ? (
-                                filteredLeads.map(lead => (
+                                filteredLeads.map(lead => lead && (
                                     <tr key={lead._id} className="hover:bg-blue-50/50 transition-colors group">
                                         <td className="py-4 px-6">
                                             <div className="flex items-center gap-3">
@@ -206,9 +206,9 @@ const LeadsManagement = () => {
                                                     {(lead.fullName || '?')[0].toUpperCase()}
                                                 </div>
                                                 <div>
-                                                    <p className="font-bold text-gray-800">{lead.fullName}</p>
+                                                    <p className="font-bold text-gray-800">{lead.fullName || 'Unknown'}</p>
                                                     <div className="flex items-center gap-2 text-xs text-gray-500 mt-0.5">
-                                                        <span>{lead.mobileNumber}</span>
+                                                        <span>{lead.mobileNumber || '—'}</span>
                                                         <span className="w-1 h-1 rounded-full bg-gray-300"></span>
                                                         <span className="truncate max-w-[120px]" title={lead.email}>{lead.email || 'No email'}</span>
                                                     </div>
@@ -217,21 +217,21 @@ const LeadsManagement = () => {
                                         </td>
                                         <td className="py-4 px-6 text-sm">
                                             <div className="flex items-center gap-1.5 text-gray-700 font-medium">
-                                                <FiMapPin className="text-gray-400" /> {lead.city}
+                                                <FiMapPin className="text-gray-400" /> {lead.city || '—'}
                                             </div>
-                                            <div className="text-xs text-gray-500 ml-5 mt-0.5">{lead.state}</div>
+                                            <div className="text-xs text-gray-500 ml-5 mt-0.5">{lead.state || '—'}</div>
                                         </td>
                                         <td className="py-4 px-6 text-sm">
                                             <div className="flex items-center gap-1.5 font-bold text-ku-blue">
-                                                <FiBook className="text-gray-400" /> <span className="truncate max-w-[150px]" title={lead.interestedCourse}>{lead.interestedCourse}</span>
+                                                <FiBook className="text-gray-400" /> <span className="truncate max-w-[150px]" title={lead.interestedCourse}>{lead.interestedCourse || '—'}</span>
                                             </div>
-                                            <div className="text-xs text-gray-500 ml-5 mt-0.5">12th Marks: <span className="font-bold text-gray-700">{lead.twelfthPercentage}%</span></div>
+                                            <div className="text-xs text-gray-500 ml-5 mt-0.5">12th Marks: <span className="font-bold text-gray-700">{lead.twelfthPercentage || '0'}%</span></div>
                                         </td>
                                         <td className="py-4 px-6 text-sm">
                                             <div className="flex items-center gap-1.5 text-gray-600 font-medium">
-                                                <FiCalendar className="text-gray-400" /> {new Date(lead.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                                <FiCalendar className="text-gray-400" /> {lead.createdAt ? new Date(lead.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—'}
                                             </div>
-                                            <div className="text-xs text-gray-400 ml-5 mt-0.5">{new Date(lead.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                                            <div className="text-xs text-gray-400 ml-5 mt-0.5">{lead.createdAt ? new Date(lead.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}</div>
                                         </td>
                                         <td className="py-4 px-6">
                                             <select

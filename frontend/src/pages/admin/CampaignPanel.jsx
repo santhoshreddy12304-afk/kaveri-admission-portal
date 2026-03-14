@@ -19,7 +19,8 @@ const CampaignPanel = () => {
     const fetchCampaigns = async () => {
         try {
             const res = await axios.get('/api/campaigns');
-            setCampaigns(res.data);
+            const data = Array.isArray(res.data) ? res.data : [];
+            setCampaigns(data);
         } catch (error) { console.error(error); }
     };
 
@@ -167,12 +168,12 @@ const CampaignPanel = () => {
                         <span className="text-xs font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded-lg">{campaigns.length} total</span>
                     </div>
                     <div className="space-y-3">
-                        {campaigns.slice(0, 3).map(camp => (
+                        {campaigns.slice(0, 3).map(camp => camp && (
                             <div key={camp._id} className="bg-gray-50 rounded-xl p-3 border border-gray-100">
-                                <p className="font-bold text-sm text-gray-800 truncate">{camp.name}</p>
+                                <p className="font-bold text-sm text-gray-800 truncate">{camp.name || 'Unnamed Campaign'}</p>
                                 <div className="flex justify-between items-center mt-2 border-t border-gray-200 pt-2">
-                                    <span className="text-xs text-gray-500">{new Date(camp.createdAt).toLocaleDateString()}</span>
-                                    <span className="text-xs font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded flex items-center gap-1"><FiCheckCircle /> {camp.messagesDelivered} sent</span>
+                                    <span className="text-xs text-gray-500">{camp.createdAt ? new Date(camp.createdAt).toLocaleDateString() : '—'}</span>
+                                    <span className="text-xs font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded flex items-center gap-1"><FiCheckCircle /> {camp.messagesDelivered || 0} sent</span>
                                 </div>
                             </div>
                         ))}
