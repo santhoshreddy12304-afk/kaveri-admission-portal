@@ -62,7 +62,19 @@ export const AuthProvider = ({ children }) => {
             return { ok: true, msg: 'Connected to University Server' };
         } catch (error) {
             console.error('Connection test failed:', error);
-            const detail = error.response ? `Server responded with ${error.response.status}` : error.message;
+            let detail = error.message;
+            if (error.message === 'Network Error') {
+                const url = axios.defaults.baseURL || '';
+                if (url.includes('.render.com')) {
+                    detail = 'Network Error: Detected incorrect Render URL. Did you mean ".onrender.com"?';
+                } else if (!url.startsWith('http')) {
+                    detail = 'Network Error: API URL is not configured or invalid.';
+                } else {
+                    detail = 'Network Error: Server is down or unreachable (Check Render Dashboard).';
+                }
+            } else if (error.response) {
+                detail = `Server responded with ${error.response.status}`;
+            }
             return { ok: false, msg: `Connection Failed: ${detail}` };
         }
     };

@@ -23,11 +23,16 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // DB Connection
 const PORT = process.env.PORT || 5000;
+mongoose.set('bufferCommands', false);
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/kaveri_admission';
 
-mongoose.connect(MONGO_URI)
+console.log('Attempting MongoDB connection...');
+mongoose.connect(MONGO_URI, { 
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
+})
     .then(async () => {
-        console.log('MongoDB Connected successfully');
+        console.log('✅ MongoDB Connected successfully');
         // Auto-seed admin if empty
         const adminCount = await Admin.countDocuments();
         if (adminCount === 0) {
@@ -38,15 +43,21 @@ mongoose.connect(MONGO_URI)
         }
     })
     .catch(err => {
-        console.error('MongoDB connection error. Falling back to Mock Database.');
-        // Even for Mock DB, ensure admin exists
+        console.error('❌ MongoDB connection error:', err.message);
+        console.log('👉 Falling back to SimpleMockDb (Local JSON mode)');
+        
+        // Ensure default admin exists in Mock DB
         const seedMockAdmin = async () => {
-            const admin = await Admin.findOne({ username: 'admin' });
-            if (!admin) {
-                const salt = await bcrypt.genSalt(10);
-                const hashedPassword = await bcrypt.hash('admin123', salt);
-                await Admin.create({ username: 'admin', password: hashedPassword, role: 'superadmin' });
-                console.log('✅ Auto-seeded default mock admin: admin / admin123');
+            try {
+                const admin = await Admin.findOne({ username: 'admin' });
+                if (!admin) {
+                    const salt = await bcrypt.genSalt(10);
+                    const hashedPassword = await bcrypt.hash('admin123', salt);
+                    await Admin.create({ username: 'admin', password: hashedPassword, role: 'superadmin' });
+                    console.log('✅ Auto-seeded default mock admin: admin / admin123');
+                }
+            } catch (e) {
+                console.error('Failed to seed mock admin:', e.message);
             }
         };
         seedMockAdmin();
