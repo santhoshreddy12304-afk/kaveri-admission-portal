@@ -9,14 +9,22 @@ This repository contains the complete full-stack Kaveri University Admission Por
 
 ## 🚀 Deployment Instructions
 
-### 1. Backend Deployment (Render / Heroku)
+### 1. Backend Deployment (Render - **EASY MODE**)
+
+1. Connect your Github repo to Render.
+2. Click **"New +"** and select **"Blueprint"**.
+3. Select this repository.
+4. Render will automatically use `render.yaml` to configure everything (Root Directory, Build, Start, Env Vars).
+
+### 1.1 Backend Deployment (Manual)
 
 1. Connect your GitHub repository to your Render/Heroku account.
-2. Select the `backend` folder as your root directory (if supported) or deploy the entire repo and set the start command to: `cd backend && npm start`.
-3. Set the following **Environment Variables**:
-   - `PORT`: `5000` (or leave default for Render)
-   - `MONGO_URI`: Your MongoDB connection string (currently using MockDB if not provided).
-   - `JWT_SECRET`: A long random string for auth tokens.
+2. **IMPORTANT**: Set the **"Root Directory"** to `backend`.
+3. Set the **"Build Command"** to `npm install`.
+4. Set the **"Start Command"** to `node index.js`.
+5. Set the following **Environment Variables**:
+   - `MONGO_URI`: Your MongoDB connection string (or it will use MockDB for the demo).
+   - `JWT_SECRET`: A long random string.
 
 ### 2. Frontend Deployment (Vercel / Netlify)
 
