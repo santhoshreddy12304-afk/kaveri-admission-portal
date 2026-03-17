@@ -18,17 +18,3 @@ services:
         value: kaveri_production_secret_2026
       - key: CORS_ORIGIN
         value: "*"
-
-  - type: static
-    name: kaveri-admission-frontend
-    plan: free
-    region: singapore
-    rootDir: frontend
-    buildCommand: npm install && npm run build
-    publishDir: dist
-    envVars:
-      - key: VITE_API_URL
-        fromService:
-          type: web
-          name: kaveri-admission-backend
-          property: host
