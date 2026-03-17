@@ -1,154 +1,233 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-toastify';
-import { FiUploadCloud, FiFileText, FiDatabase, FiCheckCircle, FiInfo } from 'react-icons/fi';
+import * as xlsx from 'xlsx';
+import { FiUploadCloud, FiFileText, FiCheckCircle, FiAlertCircle, FiDatabase, FiInfo, FiTrash2, FiActivity, FiArrowRight } from 'react-icons/fi';
 
 const BulkUpload = () => {
     const [file, setFile] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [totalContacts, setTotalContacts] = useState(0);
-    const fileInputRef = useRef(null);
-
-    useEffect(() => { fetchContactsCount(); }, []);
-
-    const fetchContactsCount = async () => {
-        try {
-            const res = await axios.get('/api/contacts/count');
-            setTotalContacts(res.data.count);
-        } catch (err) { console.error(err); }
-    }
+    const [preview, setPreview] = useState([]);
+    const [uploading, setUploading] = useState(false);
+    const [ingestStats, setIngestStats] = useState(null);
 
     const handleFileChange = (e) => {
-        const selected = e.target.files[0];
-        if (selected && (selected.name.endsWith('.xlsx') || selected.name.endsWith('.csv'))) {
-            setFile(selected);
-        } else {
-            toast.error('Invalid file type. Only .xlsx or .csv allowed.');
-            if (fileInputRef.current) fileInputRef.current.value = '';
-        }
+        const selectedFile = e.target.files[0];
+        if (!selectedFile) return;
+        setFile(selectedFile);
+
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+            try {
+                const bstr = evt.target.result;
+                const wb = xlsx.read(bstr, { type: 'binary' });
+                const wsname = wb.SheetNames[0];
+                const ws = wb.Sheets[wsname];
+                const data = xlsx.utils.sheet_to_json(ws, { header: 1 });
+                
+                // Validate headers
+                const headers = data[0] || [];
+                const required = ['fullName', 'mobileNumber'];
+                const missing = required.filter(r => !headers.includes(r));
+                
+                if (missing.length > 0) {
+                    toast.error(`Incompatible matrix: Missing headers [${missing.join(', ')}]`);
+                    setFile(null);
+                    return;
+                }
+
+                setPreview(data.slice(1, 6)); // First 5 rows for preview
+                toast.info('Matrix data parsed. Ready for ingestion.');
+            } catch (err) {
+                toast.error('Corrupt data stream: Parsing failed.');
+                setFile(null);
+            }
+        };
+        reader.readAsBinaryString(selectedFile);
     };
 
     const handleUpload = async () => {
         if (!file) return;
+        setUploading(true);
         const formData = new FormData();
         formData.append('file', file);
-        setLoading(true);
+
         try {
-            const res = await axios.post('/api/contacts/upload', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
-            toast.success(res.data.msg);
+            const res = await axios.post('/api/leads/admin/bulk-upload', formData);
+            setIngestStats(res.data);
+            toast.success(`Ingestion Complete: ${res.data.count} signals added to matrix.`);
             setFile(null);
-            if (fileInputRef.current) fileInputRef.current.value = '';
-            fetchContactsCount();
+            setPreview([]);
         } catch (error) {
-            toast.error(error.response?.data?.msg || 'Upload failed. Check file format.');
+            toast.error('Ingestion failure: Conflict in data stream.');
         } finally {
-            setLoading(false);
+            setUploading(false);
         }
     };
 
     return (
-        <div className="max-w-5xl mx-auto space-y-6">
-            {/* Header / Stats row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="md:col-span-2 bg-gradient-to-br from-ku-blue to-blue-800 rounded-2xl shadow-sm p-8 text-white relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-ku-gold rounded-full blur-[80px] opacity-20 transform translate-x-1/2 -translate-y-1/2"></div>
-                    <div className="relative z-10">
-                        <h2 className="text-3xl font-black mb-2">Grow Your Database</h2>
-                        <p className="text-blue-200 text-sm max-w-md leading-relaxed">Import student contacts from events, school visits, or third-party vendors for WhatsApp marketing campaigns.</p>
-                    </div>
-                </div>
-
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 flex flex-col justify-center items-center text-center">
-                    <div className="w-12 h-12 bg-blue-50 text-ku-blue rounded-xl flex items-center justify-center mb-3">
-                        <FiDatabase className="text-xl" />
-                    </div>
-                    <p className="text-gray-500 text-sm font-bold uppercase tracking-widest mb-1">Total Contacts</p>
-                    <h3 className="text-4xl font-black text-gray-800">{totalContacts.toLocaleString()}</h3>
-                </div>
+        <div className="max-w-4xl mx-auto space-y-10 pb-20">
+            {/* Header Hub */}
+            <div className="text-center space-y-4">
+                <motion.div 
+                    initial={{ scale: 0.8, opacity: 0 }} 
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="inline-flex items-center justify-center w-20 h-20 rounded-[2.5rem] bg-white/5 border border-white/10 text-ku-gold shadow-glow-sm mb-4"
+                >
+                    <FiDatabase size={32} />
+                </motion.div>
+                <h2 className="text-4xl font-black text-white italic tracking-tighter uppercase">Matrix <span className="text-ku-gold">Ingestion.</span></h2>
+                <p className="text-gray-500 font-black text-[10px] uppercase tracking-[0.4em] italic">Parallel Data Stream Processing / V1.2</p>
             </div>
 
-            {/* Upload Area */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12">
-                <div className="text-center mb-10">
-                    <h3 className="text-2xl font-black text-gray-800 mb-2">Upload Contact List</h3>
-                    <p className="text-gray-500">Max file size: 10MB. Formats accepted: .xlsx, .csv</p>
-                </div>
-
-                <div 
-                    className={`border-3 border-dashed rounded-[2rem] p-12 text-center transition-all ${file ? 'border-green-400 bg-green-50' : 'border-gray-300 hover:border-ku-blue bg-gray-50 hover:bg-gray-100/50'}`}
-                >
-                    <input
-                        id="file-upload" type="file" ref={fileInputRef} accept=".xlsx, .csv"
-                        onChange={handleFileChange} className="hidden"
-                    />
-                    
-                    {!file ? (
-                        <div className="flex flex-col items-center">
-                            <div className="w-20 h-20 bg-white rounded-full shadow-sm flex items-center justify-center mb-6">
-                                <FiUploadCloud className="text-4xl text-ku-blue" />
-                            </div>
-                            <p className="text-lg font-bold text-gray-800 mb-2">Drag & Drop your file here</p>
-                            <p className="text-gray-500 text-sm mb-6">or click the button below to browse</p>
-                            <label htmlFor="file-upload" className="cursor-pointer bg-white border border-gray-200 text-gray-800 px-8 py-3 rounded-xl font-bold hover:shadow-md hover:border-ku-blue transition-all">
-                                Browse Files
-                            </label>
-                        </div>
-                    ) : (
-                        <div className="flex flex-col items-center">
-                            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
-                                <FiFileText className="text-4xl text-green-600" />
-                            </div>
-                            <p className="text-lg font-bold text-green-800 mb-1">{file.name}</p>
-                            <p className="text-green-600/70 text-sm mb-6 font-medium">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Ingestion Slot */}
+                <div className="md:col-span-2 space-y-6">
+                    <div className={`
+                        glass-dark border-2 border-dashed rounded-[3rem] p-12 text-center transition-all group relative overflow-hidden
+                        ${file ? 'border-ku-gold/50 bg-ku-gold/5' : 'border-white/10 hover:border-white/30'}
+                    `}>
+                        <input type="file" accept=".xlsx, .xls, .csv" onChange={handleFileChange} className="absolute inset-0 opacity-0 cursor-pointer z-20" />
+                        
+                        <div className="relative z-10">
+                            <motion.div 
+                                animate={file ? { y: [0, -10, 0] } : {}} 
+                                transition={{ repeat: Infinity, duration: 2 }}
+                                className={`w-20 h-20 rounded-[2rem] mx-auto mb-6 flex items-center justify-center transition-colors ${file ? 'bg-ku-gold text-ku-blue' : 'bg-white/5 text-gray-500'}`}
+                            >
+                                <FiUploadCloud size={40} />
+                            </motion.div>
                             
-                            <div className="flex gap-4">
-                                <button onClick={() => { setFile(null); if(fileInputRef.current) fileInputRef.current.value = ''; }} className="px-6 py-3 rounded-xl font-bold text-gray-500 hover:bg-gray-200 transition">
-                                    Cancel
-                                </button>
-                                <button onClick={handleUpload} disabled={loading} className={`px-8 py-3 rounded-xl font-bold flex items-center transition shadow-lg ${loading ? 'bg-green-400 text-white cursor-not-allowed' : 'bg-gradient-to-r from-green-500 to-green-600 text-white hover:from-green-600 hover:to-green-700 hover:-translate-y-0.5'}`}>
-                                    {loading ? (
-                                        <><div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div> Uploading...</>
-                                    ) : (
-                                        <><FiUploadCloud className="mr-2 text-lg" /> Upload & Process DB</>
-                                    )}
-                                </button>
-                            </div>
+                            {file ? (
+                                <div className="space-y-2">
+                                    <p className="text-white font-black uppercase italic tracking-tighter text-lg">{file.name}</p>
+                                    <p className="text-[10px] text-ku-gold font-black uppercase tracking-widest">Signal Locked / {(file.size / 1024).toFixed(1)} KB</p>
+                                </div>
+                            ) : (
+                                <div className="space-y-2">
+                                    <p className="text-gray-300 font-black uppercase italic tracking-tighter text-lg">Initialize Port</p>
+                                    <p className="text-[10px] text-gray-600 font-black uppercase tracking-widest leading-loose">
+                                        Drop .xlsx or .csv matrix here <br /> or click to browse modules
+                                    </p>
+                                </div>
+                            )}
                         </div>
-                    )}
+
+                        {/* Background FX */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-ku-gold/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                    </div>
+
+                    {/* Data Preview Mesh */}
+                    <AnimatePresence>
+                        {preview.length > 0 && (
+                            <motion.div 
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                className="glass-dark border border-white/5 rounded-[2.5rem] overflow-hidden shadow-4xl"
+                            >
+                                <div className="p-6 border-b border-white/5 bg-white/[0.02] flex items-center justify-between">
+                                    <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] flex items-center gap-2">
+                                        <FiActivity className="text-ku-gold" /> Matrix Sample Check
+                                    </h3>
+                                    <button onClick={() => {setFile(null); setPreview([]);}} className="text-red-400 hover:text-red-500 transition-colors">
+                                        <FiTrash2 size={16} />
+                                    </button>
+                                </div>
+                                <div className="p-4 overflow-x-auto">
+                                    <table className="w-full text-left">
+                                        <tbody className="divide-y divide-white/[0.03]">
+                                            {preview.map((row, i) => (
+                                                <tr key={i} className="hover:bg-white/[0.02] transition-colors">
+                                                    {Array.isArray(row) && row.map((cell, j) => (
+                                                        <td key={j} className="py-3 px-4 text-[10px] text-gray-500 font-bold uppercase tracking-widest border-r border-white/[0.03] last:border-0 italic">
+                                                            {cell?.toString() || '—'}
+                                                        </td>
+                                                    ))}
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
+                    {/* Action Hub */}
+                    <div className="flex justify-center pt-4">
+                        <button 
+                            onClick={handleUpload}
+                            disabled={!file || uploading}
+                            className={`
+                                w-full py-6 rounded-3xl font-black text-xs uppercase tracking-[0.4em] transition-all relative overflow-hidden group
+                                ${!file || uploading ? 'bg-white/5 text-gray-700 cursor-not-allowed border border-white/5' : 'bg-white text-ku-blue shadow-glow hover:bg-ku-gold active:scale-[0.98]'}
+                            `}
+                        >
+                            {uploading ? (
+                                <div className="flex items-center justify-center gap-4">
+                                    <div className="w-4 h-4 border-2 border-ku-blue border-t-transparent rounded-full animate-spin"></div>
+                                    <span>Syncing Matrix...</span>
+                                </div>
+                            ) : (
+                                <span>Execute Ingestion</span>
+                            )}
+                        </button>
+                    </div>
                 </div>
 
-                {/* File Format Guide */}
-                <div className="mt-10 bg-blue-50 border border-blue-100 rounded-2xl p-6">
-                    <div className="flex items-start gap-3">
-                        <FiInfo className="text-blue-500 text-xl flex-shrink-0 mt-0.5" />
+                {/* Operations Terminal */}
+                <div className="space-y-6">
+                    <div className="glass-dark border border-white/5 p-8 rounded-[3rem] space-y-8">
                         <div>
-                            <h4 className="font-bold text-blue-900 mb-2">Required File Format</h4>
-                            <p className="text-blue-800/80 text-sm leading-relaxed mb-4">Your Excel/CSV file must have the following column headers exactly as written (case-sensitive). Extra columns are ignored.</p>
-                            
-                            <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-blue-100">
-                                <table className="w-full text-left text-sm whitespace-nowrap">
-                                    <thead>
-                                        <tr className="bg-gray-50 text-gray-600">
-                                            <th className="py-2 px-4 border-r border-b">Name</th>
-                                            <th className="py-2 px-4 border-r border-b">Phone Number <span className="text-red-500">*</span></th>
-                                            <th className="py-2 px-4 border-r border-b">Course</th>
-                                            <th className="py-2 px-4 border-b">State</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="text-gray-500">
-                                        <tr>
-                                            <td className="py-2 px-4 border-r">Rahul M</td>
-                                            <td className="py-2 px-4 border-r">9876543210</td>
-                                            <td className="py-2 px-4 border-r">B.Tech CSE</td>
-                                            <td className="py-2 px-4">Telangana</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mb-6 flex items-center gap-3">
+                                <FiInfo className="text-ku-gold" /> Protocol Specs
+                            </h4>
+                            <ul className="space-y-4">
+                                {[
+                                    { label: 'Column A', desc: 'fullName (String)', check: true },
+                                    { label: 'Column B', desc: 'mobileNumber (10 DIGIT)', check: true },
+                                    { label: 'Metadata', desc: 'email, city, course (Optional)', check: true },
+                                ].map((spec, i) => (
+                                    <li key={i} className="flex items-start gap-4 p-3 bg-white/[0.03] border border-white/5 rounded-2xl group hover:border-white/20 transition-all">
+                                        <FiCheckCircle className="text-emerald-500 mt-1 flex-shrink-0" />
+                                        <div>
+                                            <p className="text-[10px] font-black text-white uppercase italic tracking-tighter">{spec.label}</p>
+                                            <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest">{spec.desc}</p>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        <div className="bg-ku-gold/10 border border-ku-gold/20 rounded-2xl p-6">
+                            <h5 className="text-[10px] font-black text-ku-gold uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
+                                <FiAlertCircle /> Safety Override
+                            </h5>
+                            <p className="text-[10px] text-gray-500 font-medium leading-relaxed italic">
+                                Duplicate signals are automatically reconciled based on mobile number parity. System will ignore null records.
+                            </p>
                         </div>
                     </div>
+
+                    {/* Status HUD */}
+                    <AnimatePresence>
+                        {ingestStats && (
+                            <motion.div 
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                className="glass-dark border border-emerald-500/20 bg-emerald-500/[0.02] p-8 rounded-[3rem]"
+                            >
+                                <div className="flex items-center gap-4 mb-4 text-emerald-400">
+                                    <FiCheckCircle size={24} />
+                                    <h4 className="text-sm font-black uppercase tracking-widest italic">Success</h4>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-3xl font-black text-white italic tracking-tighter">{ingestStats.count}</p>
+                                    <p className="text-[9px] text-gray-500 font-black uppercase tracking-[0.3em]">New Records Synced</p>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
             </div>
         </div>

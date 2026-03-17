@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kaveri-admission-portal.onrender.com/sitemap.xml

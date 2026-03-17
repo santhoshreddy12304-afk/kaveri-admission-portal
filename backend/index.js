@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
 // Route Imports
 const authRoutes = require('./routes/auth');
@@ -15,7 +17,31 @@ const bcrypt = require('bcryptjs');
 
 const app = express();
 
+// Rate Limiting
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 200, // limit each IP to 200 requests per windowMs
+    message: { message: 'Too many requests from this IP, please try again after 15 minutes' },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+app.use('/api/', limiter);
+
 // Middleware
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            "default-src": ["'self'"],
+            "script-src": ["'self'", "'unsafe-inline'", "https://apis.google.com"],
+            "img-src": ["'self'", "data:", "https://*"],
+            "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+            "font-src": ["'self'", "https://fonts.gstatic.com"],
+            "connect-src": ["'self'", "https://*"]
+        }
+    },
+    crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
 app.use(cors({ origin: '*', credentials: true }));
 app.use(express.json());
 // Serve uploaded images statically

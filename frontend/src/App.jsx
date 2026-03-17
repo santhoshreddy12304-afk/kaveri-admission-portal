@@ -18,6 +18,7 @@ import AdmissionProcess from './pages/public/AdmissionProcess';
 import ApplyNow from './pages/public/ApplyNow';
 import Contact from './pages/public/Contact';
 import Gallery from './pages/public/Gallery';
+import NotFound from './pages/public/NotFound';
 
 // Admin Pages
 import AdminLogin from './pages/admin/AdminLogin';
@@ -26,11 +27,13 @@ import LeadsManagement from './pages/admin/LeadsManagement';
 import BulkUpload from './pages/admin/BulkUpload';
 import CampaignPanel from './pages/admin/CampaignPanel';
 
+import LoadingHUD from './components/LoadingHUD';
+
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
   const { token, loading } = useContext(AuthContext);
 
-  if (loading) return <div className="flex h-screen items-center justify-center">Loading...</div>;
+  if (loading) return <LoadingHUD />;
   if (!token) return <Navigate to="/ku-portal-gate" />;
 
   return children;
@@ -52,6 +55,7 @@ function App() {
           <Route path="admission-process" element={<AdmissionProcess />} />
           <Route path="apply" element={<ApplyNow />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
 
         {/* Admin Login - Secure Obscured Path */}

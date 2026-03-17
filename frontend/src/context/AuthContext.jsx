@@ -11,8 +11,11 @@ export const AuthProvider = ({ children }) => {
 
     // Configure axios base url depending on environment
     let API_BASE = import.meta.env.VITE_API_URL;
-    if (API_BASE && API_BASE.endsWith('/')) {
-        API_BASE = API_BASE.slice(0, -1);
+    if (API_BASE) {
+        if (API_BASE.endsWith('/')) API_BASE = API_BASE.slice(0, -1);
+        if (!API_BASE.startsWith('http') && !API_BASE.includes('localhost')) {
+            API_BASE = `https://${API_BASE}`;
+        }
     }
     axios.defaults.baseURL = API_BASE || 'http://localhost:5000';
 

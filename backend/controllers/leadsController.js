@@ -1,4 +1,5 @@
 const Lead = require('../models/Lead');
+const { sendSMS } = require('../services/smsService');
 
 // Public route to submit an enquiry
 exports.createLead = async (req, res) => {
@@ -15,6 +16,10 @@ exports.createLead = async (req, res) => {
             twelfthPercentage,
             message
         });
+
+        // Production: Send welcome SMS/WhatsApp to lead
+        const welcomeMsg = `Greetings ${fullName}! Thank you for your interest in Kaveri University for ${interestedCourse}. Our admission team will contact you shortly.`;
+        sendSMS(mobileNumber, welcomeMsg);
 
         res.json(lead);
     } catch (err) {

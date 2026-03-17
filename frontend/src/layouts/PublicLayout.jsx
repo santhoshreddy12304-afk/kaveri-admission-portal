@@ -1,78 +1,165 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../assets/images/logo.png';
+import { FiArrowRight, FiGlobe, FiPhone, FiMapPin, FiZap } from 'react-icons/fi';
 
 const PublicLayout = () => {
+    const location = useLocation();
+
     return (
-        <div className="flex flex-col min-h-screen">
-            {/* Navbar */}
-            <nav className="glass-card sticky top-0 z-50 border-b border-white/10 backdrop-blur-xl">
-                <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-                    <Link to="/" className="flex items-center space-x-3 group">
-                        <div className="bg-white p-2 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-500">
-                            <img src={logo} alt="Kaveri University" className="h-10 w-auto" />
+        <div className="flex flex-col min-h-screen bg-slate-950 text-white selection:bg-ku-gold selection:text-ku-blue">
+            {/* ─────────── ELITE NAVBAR ─────────── */}
+            <nav className="fixed top-0 inset-x-0 z-[100] p-6">
+                <motion.div 
+                    initial={{ y: -100, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    className="container mx-auto"
+                >
+                    <div className="glass-dark border border-white/10 rounded-[2.5rem] px-8 py-4 backdrop-blur-3xl shadow-4xl flex justify-between items-center relative overflow-hidden group">
+                        <div className="absolute inset-0 bg-gradient-to-r from-ku-gold/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        
+                        <Link to="/" className="flex items-center space-x-4 relative z-10 group">
+                            <motion.div 
+                                whileHover={{ rotate: 360, scale: 1.1 }}
+                                transition={{ duration: 0.8 }}
+                                className="bg-white p-2 rounded-2xl shadow-2xl scale-95 group-hover:scale-100 transition-transform"
+                            >
+                                <img src={logo} alt="Kaveri University" className="h-10 w-auto" />
+                            </motion.div>
+                            <div className="hidden lg:block">
+                                <span className="block text-xl font-black tracking-tighter uppercase italic leading-none">Kaveri</span>
+                                <span className="block text-[10px] font-black tracking-[0.4em] text-ku-gold uppercase">University</span>
+                            </div>
+                        </Link>
+
+                        <div className="hidden lg:flex items-center space-x-10 relative z-10">
+                            {[
+                                { to: '/', label: 'Home' },
+                                { to: '/about', label: 'About' },
+                                { to: '/courses', label: 'Programs' },
+                                { to: '/facilities', label: 'Facilities' },
+                                { to: '/gallery', label: 'Gallery' },
+                                { to: '/admission-process', label: 'Admission' },
+                                { to: '/contact', label: 'Contact' },
+                            ].map(link => (
+                                <Link 
+                                    key={link.to} 
+                                    to={link.to} 
+                                    className={`relative text-[10px] font-black uppercase tracking-[0.3em] transition-all hover:text-ku-gold ${location.pathname === link.to ? 'text-ku-gold' : 'text-gray-400'}`}
+                                >
+                                    {link.label}
+                                    {location.pathname === link.to && (
+                                        <motion.div layoutId="navDot" className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-ku-gold rounded-full shadow-glow" />
+                                    )}
+                                </Link>
+                            ))}
                         </div>
-                    </Link>
-                    <div className="hidden md:flex space-x-8 h-full items-center text-ku-blue">
-                        <Link to="/" className="hover:text-ku-gold transition-all duration-300 font-bold uppercase tracking-tighter text-sm">Home</Link>
-                        <Link to="/about" className="hover:text-ku-gold transition-all duration-300 font-bold uppercase tracking-tighter text-sm">About</Link>
-                        <Link to="/courses" className="hover:text-ku-gold transition-all duration-300 font-bold uppercase tracking-tighter text-sm">Programs</Link>
-                        <Link to="/facilities" className="hover:text-ku-gold transition-all duration-300 font-bold uppercase tracking-tighter text-sm">Facilities</Link>
-                        <Link to="/gallery" className="hover:text-ku-gold transition-all duration-300 font-bold uppercase tracking-tighter text-sm">Gallery</Link>
-                        <Link to="/admission-process" className="hover:text-ku-gold transition-all duration-300 font-bold uppercase tracking-tighter text-sm">Admission</Link>
-                        <Link to="/contact" className="hover:text-ku-gold transition-all duration-300 font-bold uppercase tracking-tighter text-sm">Contact</Link>
-                        <Link to="/apply" className="bg-gradient-to-r from-ku-blue to-blue-800 text-white px-8 py-2.5 rounded-xl font-bold hover:shadow-[0_10px_20px_rgba(0,41,87,0.3)] transition-all duration-300 transform hover:-translate-y-1">Apply Now</Link>
+
+                        <Link 
+                            to="/apply" 
+                            className="relative z-10 bg-white text-ku-blue px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-ku-gold transition-all shadow-2xl hover:-translate-y-1 active:scale-95 group"
+                        >
+                            Apply Now
+                            <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
+                        </Link>
                     </div>
-                    {/* Mobile menu button could go here */}
-                </div>
+                </motion.div>
             </nav>
 
-            {/* Main Content Area */}
-            <main className="flex-grow">
-                <Outlet />
+            {/* ─────────── MAIN VIEWPORT ─────────── */}
+            <main className="flex-grow pt-32">
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={location.pathname}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -20 }}
+                        transition={{ duration: 0.5, ease: "anticipate" }}
+                    >
+                        <Outlet />
+                    </motion.div>
+                </AnimatePresence>
             </main>
 
-            {/* Footer */}
-            <footer className="bg-gradient-to-br from-ku-blue via-blue-900 to-slate-900 text-gray-300 pt-16 pb-8 border-t-4 border-ku-gold relative overflow-hidden">
-                <div className="absolute inset-0 opacity-5" style={{backgroundImage:'url(/assets/images/3d_bg.png)', backgroundSize:'cover'}}></div>
-                <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-ku-gold blur-[120px] opacity-10"></div>
-                <div className="relative z-10 container mx-auto px-6">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-                        <div className="md:col-span-2">
-                            <div className="bg-white/10 inline-block p-3 rounded-2xl mb-6">
+            {/* ─────────── FUTURISTIC FOOTER ─────────── */}
+            <footer className="bg-slate-950 text-gray-400 pt-32 pb-16 border-t border-white/5 relative overflow-hidden">
+                <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-ku-gold to-transparent opacity-30"></div>
+                <div className="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-ku-gold/5 rounded-full blur-[150px]"></div>
+                
+                <div className="container mx-auto px-6 relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 mb-24">
+                        <div className="lg:col-span-5">
+                            <div className="bg-white/5 inline-block p-4 rounded-3xl mb-10 border border-white/10">
                                 <img src={logo} alt="Kaveri University" className="h-12 w-auto filter brightness-0 invert" />
                             </div>
-                            <p className="text-gray-400 text-lg leading-relaxed mb-4 max-w-sm">
-                                Empowering Innovation, Technology & Agriculture for a Sustainable Future. <em className="text-ku-gold">Shaping The New.</em>
+                            <h3 className="text-4xl font-black text-white mb-8 tracking-tighter uppercase italic leading-none">Shaping the <br/><span className="text-ku-gold">New Frontier.</span></h3>
+                            <p className="text-xl text-gray-500 font-medium leading-relaxed max-w-md italic mb-10">
+                                Empowering Innovation, Technology & Agriculture for a Sustainable Future. The digital gateway to excellence.
                             </p>
-                            <div className="flex gap-3">
-                                <a href="https://kaveriuniversity.edu.in" target="_blank" rel="noreferrer" className="glass-card px-4 py-2 rounded-xl text-sm font-bold text-white hover:bg-white/20 transition-all">🌐 Website</a>
+                            <div className="flex gap-4">
+                                <a href="https://kaveriuniversity.edu.in" target="_blank" rel="noreferrer" className="glass-dark border border-white/10 px-6 py-3 rounded-2xl text-xs font-black text-white hover:bg-white/10 hover:text-ku-gold transition-all uppercase tracking-widest flex items-center gap-3">
+                                    <FiGlobe /> Global HQ
+                                </a>
                             </div>
                         </div>
-                        <div>
-                            <h3 className="text-lg font-black text-white mb-6 uppercase tracking-widest">Quick Links</h3>
-                            <ul className="space-y-3">
+
+                        <div className="lg:col-span-3">
+                            <h3 className="text-xs font-black text-ku-gold mb-10 uppercase tracking-[0.5em] flex items-center gap-3">
+                                <div className="w-2 h-2 bg-ku-gold rounded-full"></div> Core Links
+                            </h3>
+                            <ul className="space-y-6">
                                 {[
-                                    { to: '/admission-process', label: 'Admission 2026-27' },
-                                    { to: '/courses', label: 'Academic Programs' },
-                                    { to: '/facilities', label: 'Campus Facilities' },
-                                    { to: '/apply', label: 'Apply Online' },
-                                    { to: '/contact', label: 'Contact Us' },
+                                    { to: '/admission-process', label: 'Induction 2026' },
+                                    { to: '/courses', label: 'Programs Hub' },
+                                    { to: '/facilities', label: 'Infrastructure' },
+                                    { to: '/apply', label: 'Secure Access' },
+                                    { to: '/contact', label: 'Human Help' },
                                 ].map(link => (
-                                    <li key={link.to}><Link to={link.to} className="hover:text-ku-gold transition-all font-medium flex items-center gap-2"><span className="text-ku-gold text-xs">▶</span> {link.label}</Link></li>
+                                    <li key={link.to}>
+                                        <Link to={link.to} className="group flex items-center gap-4 text-white hover:text-ku-gold transition-all font-black text-xs uppercase tracking-widest">
+                                            <span className="w-0 group-hover:w-4 h-[2px] bg-ku-gold transition-all"></span>
+                                            {link.label}
+                                        </Link>
+                                    </li>
                                 ))}
                             </ul>
                         </div>
-                        <div>
-                            <h3 className="text-lg font-black text-white mb-6 uppercase tracking-widest">Contact</h3>
-                            <div className="space-y-3 text-gray-400">
-                                <p className="flex items-start gap-2"><span className="text-ku-gold flex-shrink-0 mt-0.5">📍</span><span>Gowraram Village, Wargal, Hyderabad, Telangana – 502279</span></p>
-                                <p className="flex items-center gap-2"><span className="text-ku-gold">📞</span><a href="tel:9666041795" className="hover:text-ku-gold transition">9666041795, 9392939698</a></p>
+
+                        <div className="lg:col-span-4">
+                            <h3 className="text-xs font-black text-ku-gold mb-10 uppercase tracking-[0.5em] flex items-center gap-3">
+                                <div className="w-2 h-2 bg-ku-gold rounded-full"></div> Network Status
+                            </h3>
+                            <div className="space-y-8">
+                                <div className="flex items-start gap-6 group">
+                                    <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-ku-gold group-hover:bg-ku-gold group-hover:text-ku-blue transition-all">
+                                        <FiMapPin size={20} />
+                                    </div>
+                                    <div>
+                                        <p className="text-[10px] font-black text-gray-600 uppercase tracking-widest mb-1">Location</p>
+                                        <p className="text-white font-medium text-sm">Gowraram Village, Wargal, <br/>Hyderabad, TS – 502279</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-6 group">
+                                    <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-ku-gold group-hover:bg-ku-gold group-hover:text-ku-blue transition-all">
+                                        <FiPhone size={20} />
+                                    </div>
+                                    <div>
+                                        <p className="text-[10px] font-black text-gray-600 uppercase tracking-widest mb-1">Direct Comms</p>
+                                        <a href="tel:9666041795" className="text-white font-medium text-sm hover:text-ku-gold transition">9666041795, 9392939698</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className="border-t border-white/10 pt-8 text-center text-gray-500 text-sm">
-                        <p>&copy; {new Date().getFullYear()} Kaveri University. All Rights Reserved. | Built with ❤️ for student success.</p>
+
+                    <div className="border-t border-white/5 pt-12 flex flex-col md:flex-row justify-between items-center gap-8">
+                        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-600">&copy; {new Date().getFullYear()} Kaveri University Core. All Nodes Secured.</p>
+                        <div className="flex gap-10 opacity-30">
+                            <FiZap size={24} />
+                            <div className="h-6 w-px bg-white/20"></div>
+                            <span className="text-[10px] font-mono tracking-widest">VER: 3.0.0-PRO</span>
+                        </div>
                     </div>
                 </div>
             </footer>

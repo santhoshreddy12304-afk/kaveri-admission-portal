@@ -18,3 +18,16 @@ services:
         generateValue: true
       - key: CORS_ORIGIN
         value: "*"
+
+  - type: static
+    name: kaveri-admission-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: kaveri-admission-backend
+          property: host

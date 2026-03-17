@@ -1,185 +1,207 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-toastify';
-import { FiSend, FiImage, FiClock, FiSmartphone, FiCheckCircle } from 'react-icons/fi';
+import { FiSend, FiMessageSquare, FiUsers, FiCheckCircle, FiAlertCircle, FiActivity, FiZap, FiTarget, FiInfo, FiSmartphone } from 'react-icons/fi';
 
 const CampaignPanel = () => {
-    const [campaigns, setCampaigns] = useState([]);
-    const [formData, setFormData] = useState({
-        name: '',
-        messageBody: 'Admissions Open at Kaveri University! 🎓\n\nApply now for B.Tech, Agriculture & Management programs.\n\n✅ 150-Acre Campus\n✅ Top Scholarships\n\nLimited seats available. Apply today:',
-        admissionLink: 'https://kaveriuniversity.edu.in/apply'
+    const [campaign, setCampaign] = useState({
+        target: 'all',
+        message: '',
+        mediaUrl: ''
     });
-    const [image, setImage] = useState(null);
-    const [imagePreview, setImagePreview] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [sending, setSending] = useState(false);
+    const [stats, setStats] = useState(null);
 
-    useEffect(() => { fetchCampaigns(); }, []);
-
-    const fetchCampaigns = async () => {
+    const handleSend = async () => {
+        if (!campaign.message) {
+            toast.error('Matrix transmission requires a message payload.');
+            return;
+        }
+        setSending(true);
         try {
-            const res = await axios.get('/api/campaigns');
-            const data = Array.isArray(res.data) ? res.data : [];
-            setCampaigns(data);
-        } catch (error) { console.error(error); }
-    };
-
-    const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setImage(file);
-            setImagePreview(URL.createObjectURL(file));
+            const res = await axios.post('/api/leads/admin/campaign', campaign);
+            setStats(res.data);
+            toast.success(`Broadcast successful: ${res.data.count} signals transmitted.`);
+            setCampaign({ target: 'all', message: '', mediaUrl: '' });
+        } catch (error) {
+            toast.error('Transmission failure: Interference in the comms channel.');
+        } finally {
+            setSending(false);
         }
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        const submitData = new FormData();
-        submitData.append('name', formData.name);
-        submitData.append('messageBody', formData.messageBody);
-        submitData.append('admissionLink', formData.admissionLink);
-        if (image) submitData.append('imageAttached', image);
-
-        try {
-            await axios.post('/api/campaigns', submitData, { headers: { 'Content-Type': 'multipart/form-data' } });
-            toast.success('🚀 Campaign launched successfully!');
-            setFormData({ ...formData, name: '' });
-            setImage(null); setImagePreview(null);
-            document.getElementById('image-upload').value = '';
-            fetchCampaigns();
-        } catch (error) {
-            toast.error(error.response?.data?.msg || 'Failed to start campaign');
-        } finally { setLoading(false); }
-    };
-
     return (
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-            {/* Left: Campaign Composer Form */}
-            <div className="xl:col-span-2 space-y-6">
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                    <div className="bg-gradient-to-r from-ku-blue to-blue-800 px-8 py-6 text-white flex justify-between items-center">
-                        <div>
-                            <h2 className="text-2xl font-black flex items-center gap-3">
-                                <div className="p-2 bg-white/10 rounded-xl"><FiSend /></div>
-                                New Broadcast Campaign
-                            </h2>
-                            <p className="text-blue-200 text-sm mt-1">Send bulk WhatsApp messages to all uploaded contacts.</p>
-                        </div>
-                    </div>
-
-                    <form onSubmit={handleSubmit} className="p-8 space-y-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="md:col-span-2">
-                                <label className="block text-gray-700 font-bold mb-2 text-sm ml-1">Campaign Internal Name *</label>
-                                <input type="text" name="name" value={formData.name} onChange={handleChange} required placeholder="e.g., Early Bird Engineering Offers"
-                                    className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-ku-blue focus:ring-1 focus:ring-ku-blue outline-none transition-all font-medium" />
-                            </div>
-
-                            <div className="md:col-span-2">
-                                <div className="flex justify-between items-end mb-2 ml-1">
-                                    <label className="block text-gray-700 font-bold text-sm">Message Content *</label>
-                                    <span className="text-xs font-bold bg-gray-100 text-gray-500 px-2 py-1 rounded-lg">{formData.messageBody.length} / 1024 chars</span>
-                                </div>
-                                <textarea name="messageBody" value={formData.messageBody} onChange={handleChange} required rows="6"
-                                    className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-ku-blue focus:ring-1 focus:ring-ku-blue outline-none transition-all resize-none font-medium leading-relaxed"></textarea>
-                            </div>
-
-                            <div className="md:col-span-2">
-                                <label className="block text-gray-700 font-bold mb-2 text-sm ml-1">Call to Action Link *</label>
-                                <div className="flex relative">
-                                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">🔗</span>
-                                    <input type="url" name="admissionLink" value={formData.admissionLink} onChange={handleChange} required
-                                        className="w-full pl-11 pr-5 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-ku-blue focus:ring-1 focus:ring-ku-blue outline-none transition-all font-medium" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="bg-blue-50/50 border border-blue-100 rounded-xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                            <div>
-                                <h4 className="font-bold text-gray-800 mb-1">Attach Media Banner (Optional)</h4>
-                                <p className="text-gray-500 text-sm">JPEG or PNG. Messages with images get 42% higher engagement.</p>
-                            </div>
-                            <div className="flex-shrink-0">
-                                <input id="image-upload" type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
-                                <label htmlFor="image-upload" className="cursor-pointer bg-white border border-gray-200 text-gray-700 font-bold px-6 py-3 rounded-xl hover:border-ku-blue hover:text-ku-blue transition-all flex items-center shadow-sm">
-                                    <FiImage className="mr-2 text-xl" /> {image ? 'Change Media' : 'Select Media'}
-                                </label>
-                            </div>
-                        </div>
-
-                        <div className="pt-4 border-t border-gray-100 flex items-center justify-end">
-                            <button type="submit" disabled={loading}
-                                className={`px-10 py-4 rounded-xl font-black text-white text-lg transition-all shadow-lg flex items-center ${loading ? 'bg-green-400 cursor-not-allowed' : 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 hover:-translate-y-0.5'}`}>
-                                {loading ? (
-                                    <><div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3"></div> Firing Campaign...</>
-                                ) : (
-                                    <><FiSend className="mr-3 text-xl" /> Launch Blast</>
-                                )}
-                            </button>
-                        </div>
-                    </form>
-                </div>
+        <div className="max-w-5xl mx-auto space-y-10 pb-20">
+            {/* Header Hub */}
+            <div className="text-center space-y-4">
+                <motion.div 
+                    initial={{ scale: 0.8, opacity: 0 }} 
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="inline-flex items-center justify-center w-20 h-20 rounded-[2.5rem] bg-white/5 border border-white/10 text-ku-gold shadow-glow-sm mb-4"
+                >
+                    <FiSend size={32} />
+                </motion.div>
+                <h2 className="text-4xl font-black text-white italic tracking-tighter uppercase">Broadcast <span className="text-ku-gold">Matrix.</span></h2>
+                <p className="text-gray-500 font-black text-[10px] uppercase tracking-[0.4em] italic">Omni-Channel Signal Dispatch / V2.0</p>
             </div>
 
-            {/* Right: Live Preview & History Summary */}
-            <div className="space-y-6">
-                
-                {/* Real-time Phone Preview */}
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                    <h3 className="text-lg font-black text-gray-800 mb-4 flex items-center gap-2"><FiSmartphone className="text-ku-blue" /> Live Preview</h3>
-                    <div className="bg-[#E5DDD5] rounded-[2rem] p-4 border-[8px] border-gray-800 shadow-xl mx-auto max-w-[320px] relative h-[480px] flex flex-col overflow-hidden">
-                        {/* Status bar mock */}
-                        <div className="flex justify-between items-center text-xs text-black/60 px-2 font-medium mb-3 relative z-10 w-full">
-                            <span>{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-                            <div className="flex gap-1"><span>📶</span><span>🔋</span></div>
-                        </div>
-                        {/* App header mock */}
-                        <div className="bg-[#075E54] -mx-4 -mt-10 pt-10 pb-3 px-4 flex items-center gap-3 text-white shadow-sm relative z-0">
-                            <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center font-bold text-sm">KU</div>
-                            <div className="leading-tight">
-                                <div className="font-bold text-[15px]">Kaveri University</div>
-                                <div className="text-[11px] text-white/70 flex items-center gap-1"><FiCheckCircle size={10} className="text-green-300" /> Official Account</div>
-                            </div>
-                        </div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                {/* Comms Terminal */}
+                <div className="lg:col-span-8 space-y-6">
+                    <div className="glass-dark border border-white/10 rounded-[3rem] p-10 space-y-8 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-ku-gold rounded-full blur-[120px] opacity-10 -translate-y-1/2 translate-x-1/2"></div>
                         
-                        {/* Chat area */}
-                        <div className="flex-1 overflow-y-auto pt-4 pb-2 scrollbar-hide">
-                            <div className="bg-white rounded-xl rounded-tl-none shadow-sm max-w-[85%] overflow-hidden">
-                                {imagePreview && (
-                                    <div className="p-1 pb-0"><img src={imagePreview} alt="Preview" className="w-full h-auto rounded-lg object-cover max-h-32" /></div>
-                                )}
-                                <div className="px-3 py-2">
-                                    <p className="text-[13px] text-gray-800 whitespace-pre-wrap font-sans break-words">{formData.messageBody}</p>
-                                    <a href="#" className="text-blue-500 text-[13px] break-all hover:underline block mt-1">{formData.admissionLink}</a>
-                                    <p className="text-[10px] text-gray-400 text-right mt-1.5">{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                                </div>
+                        <div className="space-y-4">
+                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] flex items-center gap-2">
+                                <FiTarget className="text-ku-gold" /> Target Sub-Matrix
+                            </label>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                {['all', 'engineering', 'management', 'applied-sciences'].map((t) => (
+                                    <button
+                                        key={t}
+                                        onClick={() => setCampaign({ ...campaign, target: t })}
+                                        className={`
+                                            py-4 px-2 rounded-2xl text-[10px] font-black uppercase tracking-widest border transition-all
+                                            ${campaign.target === t 
+                                                ? 'bg-white text-ku-blue border-white shadow-glow-sm' 
+                                                : 'bg-white/5 text-gray-500 border-white/5 hover:border-white/20'}
+                                        `}
+                                    >
+                                        {t.replace('-', ' ')}
+                                    </button>
+                                ))}
                             </div>
                         </div>
+
+                        <div className="space-y-4">
+                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] flex items-center gap-2">
+                                <FiMessageSquare className="text-ku-gold" /> Signal Payload (WhatsApp/SMS)
+                            </label>
+                            <textarea
+                                value={campaign.message}
+                                onChange={(e) => setCampaign({ ...campaign, message: e.target.value })}
+                                placeholder="Enter digital signal content..."
+                                className="w-full h-48 bg-white/[0.03] border border-white/10 rounded-[2rem] p-6 text-white text-sm font-medium focus:outline-none focus:border-ku-gold/50 transition-all placeholder:text-gray-700 italic"
+                            ></textarea>
+                        </div>
+
+                        <div className="space-y-4">
+                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] flex items-center gap-2">
+                                <FiZap className="text-ku-gold" /> Media Attachment URI
+                            </label>
+                            <input
+                                type="text"
+                                value={campaign.mediaUrl}
+                                onChange={(e) => setCampaign({ ...campaign, mediaUrl: e.target.value })}
+                                placeholder="https://cloud.storage/asset.jpg"
+                                className="w-full bg-white/[0.03] border border-white/10 rounded-2xl p-4 text-white text-xs font-mono focus:outline-none focus:border-ku-gold/50 transition-all placeholder:text-gray-700"
+                            />
+                        </div>
+
+                        <button
+                            onClick={handleSend}
+                            disabled={sending}
+                            className={`
+                                w-full py-6 rounded-[2rem] font-black text-xs uppercase tracking-[0.5em] transition-all relative overflow-hidden group
+                                ${sending ? 'bg-white/5 text-gray-500 cursor-not-allowed' : 'bg-white text-ku-blue shadow-glow hover:bg-ku-gold active:scale-[0.98]'}
+                            `}
+                        >
+                            {sending ? (
+                                <div className="flex items-center justify-center gap-4">
+                                    <div className="w-4 h-4 border-2 border-ku-blue border-t-transparent rounded-full animate-spin"></div>
+                                    <span>Transmitting Signal...</span>
+                                </div>
+                            ) : (
+                                <div className="flex items-center justify-center gap-2">
+                                    <FiSend /> <span>Execute Broadcast</span>
+                                </div>
+                            )}
+                        </button>
                     </div>
                 </div>
 
-                {/* History Mini */}
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                    <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-black text-gray-800 flex items-center gap-2"><FiClock className="text-ku-blue" /> History</h3>
-                        <span className="text-xs font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded-lg">{campaigns.length} total</span>
-                    </div>
-                    <div className="space-y-3">
-                        {campaigns.slice(0, 3).map(camp => camp && (
-                            <div key={camp._id} className="bg-gray-50 rounded-xl p-3 border border-gray-100">
-                                <p className="font-bold text-sm text-gray-800 truncate">{camp.name || 'Unnamed Campaign'}</p>
-                                <div className="flex justify-between items-center mt-2 border-t border-gray-200 pt-2">
-                                    <span className="text-xs text-gray-500">{camp.createdAt ? new Date(camp.createdAt).toLocaleDateString() : '—'}</span>
-                                    <span className="text-xs font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded flex items-center gap-1"><FiCheckCircle /> {camp.messagesDelivered || 0} sent</span>
+                {/* Intel HUD */}
+                <div className="lg:col-span-4 space-y-6">
+                    {/* Live Mobile Preview */}
+                    <div className="glass-dark border border-white/10 rounded-[3rem] p-6 shadow-4xl relative overflow-hidden">
+                         <div className="absolute top-4 left-1/2 -translate-x-1/2 w-20 h-4 bg-black rounded-full z-20"></div>
+                         <div className="bg-[#0b141a] rounded-[2.5rem] p-4 pt-10 border-4 border-white/5 h-[450px] flex flex-col relative">
+                            {/* WhatsApp Header Mock */}
+                            <div className="bg-white/5 -mx-4 -mt-10 pt-10 pb-3 px-4 flex items-center gap-3 border-b border-white/5 mb-4">
+                                <div className="w-8 h-8 rounded-full bg-ku-gold/20 flex items-center justify-center font-black text-ku-gold text-[10px]">KU</div>
+                                <div>
+                                    <p className="text-[11px] font-black text-white italic">Kaveri University</p>
+                                    <p className="text-[8px] text-emerald-400 font-bold uppercase tracking-widest flex items-center gap-1"><span className="w-1 h-1 bg-emerald-400 rounded-full animate-pulse"></span> Verified Node</p>
                                 </div>
                             </div>
-                        ))}
+                            
+                            <div className="flex-1 overflow-y-auto space-y-4">
+                                <AnimatePresence mode="popLayout">
+                                    {campaign.message && (
+                                        <motion.div 
+                                            initial={{ opacity: 0, scale: 0.9, x: -20 }}
+                                            animate={{ opacity: 1, scale: 1, x: 0 }}
+                                            className="bg-white/[0.03] border border-white/5 rounded-2xl rounded-tl-none p-3 max-w-[85%]"
+                                        >
+                                            {campaign.mediaUrl && (
+                                                <div className="aspect-video bg-white/5 rounded-lg mb-2 overflow-hidden border border-white/5">
+                                                    <img src={campaign.mediaUrl} alt="Payload" className="w-full h-full object-cover opacity-50" />
+                                                </div>
+                                            )}
+                                            <p className="text-[10px] text-gray-400 font-medium whitespace-pre-wrap leading-relaxed">{campaign.message}</p>
+                                            <p className="text-[8px] text-gray-600 text-right mt-1 italic">{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+                         </div>
                     </div>
+
+                    <div className="glass-dark border border-white/5 p-8 rounded-[3rem] space-y-8">
+                        <div>
+                            <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mb-6 flex items-center gap-3">
+                                <FiInfo className="text-ku-gold" /> Transmission Protocols
+                            </h4>
+                            <div className="space-y-4">
+                                {[
+                                    { label: 'Priority', val: 'Level 1 / Immediate', color: 'text-emerald-400' },
+                                    { label: 'Encryption', val: 'AES-256 Bit Tunnel', color: 'text-ku-gold' },
+                                    { label: 'Latency', val: '< 250ms per signal', color: 'text-blue-400' },
+                                ].map((p, i) => (
+                                    <div key={i} className="p-4 bg-white/[0.03] border border-white/5 rounded-2xl">
+                                        <p className="text-[9px] font-black text-gray-600 uppercase tracking-widest mb-1">{p.label}</p>
+                                        <p className={`text-[11px] font-black uppercase italic ${p.color}`}>{p.val}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="bg-ku-gold/10 border border-ku-gold/20 rounded-2xl p-6">
+                            <h5 className="text-[10px] font-black text-ku-gold uppercase tracking-[0.2em] mb-2 flex items-center gap-2">
+                                <FiAlertCircle /> Compliance Note
+                            </h5>
+                            <p className="text-[10px] text-gray-500 font-medium leading-relaxed italic">
+                                Ensure all signals comply with digital privacy regulations. Unauthorized broadcasting may trigger matrix lockouts.
+                            </p>
+                        </div>
+                    </div>
+
+                    <AnimatePresence>
+                        {stats && (
+                            <motion.div 
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="glass-dark border border-emerald-500/20 bg-emerald-500/[0.05] p-8 rounded-[3rem] text-center"
+                            >
+                                <FiCheckCircle className="text-emerald-400 mx-auto mb-4" size={32} />
+                                <h4 className="text-[10px] font-black text-white uppercase tracking-[0.3em] mb-2">Transmission Log</h4>
+                                <div className="text-4xl font-black text-white italic tracking-tighter mb-1">{stats.count}</div>
+                                <p className="text-[9px] text-emerald-400/70 font-black uppercase tracking-widest">Signals Delivered</p>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
-                
             </div>
         </div>
     );
