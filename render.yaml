@@ -21,7 +21,6 @@ services:
 
   - type: static
     name: kaveri-admission-frontend
-    runtime: static
     rootDir: frontend
     buildCommand: npm install && npm run build
     publishDir: dist
