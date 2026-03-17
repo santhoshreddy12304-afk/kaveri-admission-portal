@@ -27,6 +27,5 @@ services:
     envVars:
       - key: VITE_API_URL
         fromService:
-          type: web
           name: kaveri-admission-backend
-          property: host
+          property: url
