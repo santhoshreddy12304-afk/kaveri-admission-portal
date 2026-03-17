@@ -15,12 +15,14 @@ services:
       - key: MONGO_URI
         sync: false
       - key: JWT_SECRET
-        generateValue: true
+        value: kaveri_production_secret_2026
       - key: CORS_ORIGIN
         value: "*"
 
   - type: static
     name: kaveri-admission-frontend
+    plan: free
+    region: singapore
     rootDir: frontend
     buildCommand: npm install && npm run build
     publishDir: dist
