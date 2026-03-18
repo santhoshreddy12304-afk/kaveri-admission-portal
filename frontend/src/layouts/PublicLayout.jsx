@@ -1,11 +1,12 @@
 import React from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, useOutlet, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../assets/images/logo.png';
 import { FiArrowRight, FiGlobe, FiPhone, FiMapPin, FiZap } from 'react-icons/fi';
 
 const PublicLayout = () => {
     const location = useLocation();
+    const outlet = useOutlet();
 
     return (
         <div className="flex flex-col min-h-screen bg-slate-950 text-white selection:bg-ku-gold selection:text-ku-blue">
@@ -77,7 +78,7 @@ const PublicLayout = () => {
                         exit={{ opacity: 0, x: -20 }}
                         transition={{ duration: 0.5, ease: "anticipate" }}
                     >
-                        <Outlet />
+                        {outlet}
                     </motion.div>
                 </AnimatePresence>
             </main>

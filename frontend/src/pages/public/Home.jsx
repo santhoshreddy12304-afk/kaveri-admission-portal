@@ -7,7 +7,7 @@ import {
   FiCpu, FiCheckCircle, FiShield, FiNavigation, FiPhoneCall, FiExternalLink, FiArrowRight 
 } from 'react-icons/fi';
 import { GraduationCap, Landmark, Microscope, Activity, Sparkles, Zap, ShieldCheck } from 'lucide-react';
-import campus3d from '../../assets/images/campus_3d_hero.png';
+import kaveriHero from '../../assets/images/gallery_120.jpeg';
 
 // Animated counter hook
 const useCounter = (end, duration = 2000, trigger) => {
@@ -118,7 +118,7 @@ const Home = () => {
             {/* ─────────── HERO ─────────── */}
             <section className="relative h-[950px] flex items-center justify-center overflow-hidden perspective-view">
                 <motion.div style={{ y: y1 }} className="absolute inset-0 z-0">
-                    <img src={campus3d} alt="Kaveri University Campus" className="w-full h-full object-cover scale-110" />
+                    <img src={kaveriHero} alt="Kaveri University Main Block" className="w-full h-full object-cover scale-110" />
                     <div className="absolute inset-0 bg-gradient-to-br from-[#020617]/95 via-[#0f172a]/80 to-transparent"></div>
                 </motion.div>
 
