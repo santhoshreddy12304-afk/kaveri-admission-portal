@@ -80,6 +80,16 @@ const galleryItems = [
     },
 ];
 
+// Dynamically add a massive array of real extracted photos from the PDF
+const extraPhotos = [49, 101, 36, 61, 47, 41, 74, 110, 108, 99, 111, 24, 69, 48, 71, 109, 106, 78, 65, 8, 12, 14, 26, 30, 42, 54, 83].map((id, index) => ({
+    src: `/assets/images/gallery_${id}.jpeg`,
+    alt: `Kaveri University Archive ${id}`,
+    category: index % 4 === 0 ? 'Labs' : index % 3 === 0 ? 'Academics' : index % 2 === 0 ? 'Events' : 'Campus',
+    caption: `University Archives — Captured Moment ${id}`
+}));
+
+const completeGallery = [...galleryItems, ...extraPhotos];
+
 const categories = ['All', 'Campus', 'Academics', 'Labs', 'Events'];
 
 const Gallery = () => {
@@ -87,8 +97,8 @@ const Gallery = () => {
     const [lightbox, setLightbox] = useState(null);
 
     const filtered = activeCategory === 'All'
-        ? galleryItems
-        : galleryItems.filter(i => i.category === activeCategory);
+        ? completeGallery
+        : completeGallery.filter(i => i.category === activeCategory);
 
     return (
         <div className="min-h-screen bg-slate-950 text-white perspective-view overflow-x-hidden">

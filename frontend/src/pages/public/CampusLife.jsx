@@ -16,7 +16,7 @@ const CampusLife = () => {
                     transition={{ duration: 1.5 }}
                     className="absolute inset-0"
                 >
-                    <img src="/assets/images/campus_main.png" alt="Campus Atmosphere" className="w-full h-full object-cover opacity-10" />
+                    <img src="/assets/images/gallery_125.jpeg" alt="Campus Atmosphere" className="w-full h-full object-cover opacity-10" />
                     <div className="absolute inset-0 bg-gradient-to-br from-[#020617]/90 via-[#020617]/80 to-transparent backdrop-blur-3xl"></div>
                 </motion.div>
                 
@@ -58,7 +58,7 @@ const CampusLife = () => {
                                 <span className="bg-ku-gold/20 text-ku-gold text-[10px] font-black uppercase px-4 py-1.5 rounded-full border border-ku-gold/30 backdrop-blur-md">Node: Learning_Hub</span>
                             </div>
                             <div className="h-[500px] overflow-hidden relative">
-                                <img src="/assets/images/lecture_hall.png" alt="Interactive Classrooms" className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                                <img src="/assets/images/gallery_115.jpeg" alt="Interactive Classrooms" className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent opacity-60"></div>
                                 <div className="absolute bottom-10 left-10">
                                      <div className="text-ku-gold mb-6 drop-shadow-glow"><FiBook size={56} /></div>
@@ -77,7 +77,7 @@ const CampusLife = () => {
                                 <span className="bg-ku-gold/20 text-ku-gold text-[10px] font-black uppercase px-4 py-1.5 rounded-full border border-ku-gold/30 backdrop-blur-md">Node: Living_Sector</span>
                             </div>
                             <div className="h-[500px] overflow-hidden relative">
-                                <img src="/assets/images/campus_main.png" alt="Academic Infrastructure" className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                                <img src="/assets/images/gallery_124.jpeg" alt="Academic Infrastructure" className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent opacity-60"></div>
                                 <div className="absolute bottom-10 left-10">
                                      <div className="text-ku-gold mb-6 drop-shadow-glow"><FiHome size={56} /></div>

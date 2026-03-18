@@ -11,7 +11,7 @@ const facilitiesData = [
         category: 'Academic Infrastructure',
         icon: <Layers size={40} />,
         items: [
-            { name: 'Cognitive Classrooms', desc: 'Hybrid learning environments with holographic integration, bio-metric attendance, and 4K spatial audio.', img: '/assets/images/lecture_hall.png' },
+            { name: 'Cognitive Classrooms', desc: 'Hybrid learning environments with holographic integration, bio-metric attendance, and 4K spatial audio.', img: '/assets/images/gallery_115.jpeg' },
             { name: 'Omni-Channel Library', desc: 'Beyond 50,000 volumes, access a neural-link to global research indices and AI-assisted citation tools.', img: '/assets/images/gallery_122.jpeg' },
         ]
     },
@@ -19,8 +19,8 @@ const facilitiesData = [
         category: 'Edge Research Labs',
         icon: <Microscope size={40} />,
         items: [
-            { name: 'Bio-Genetics Lab', desc: 'Advanced CRISPR sequencing and synthetic biology suites for next-gen agricultural breakthroughs.', img: '/assets/images/science_lab.png' },
-            { name: 'AI & Robotics Hub', desc: 'India-first robotics foundry with 6-axis cobots, drone swarms, and high-performance computing clusters.', img: '/assets/images/robotics_lab.png' },
+            { name: 'Bio-Genetics Lab', desc: 'Advanced CRISPR sequencing and synthetic biology suites for next-gen agricultural breakthroughs.', img: '/assets/images/gallery_117.jpeg' },
+            { name: 'AI & Robotics Hub', desc: 'India-first robotics foundry with 6-axis cobots, drone swarms, and high-performance computing clusters.', img: '/assets/images/gallery_120.jpeg' },
         ]
     },
     {
@@ -28,7 +28,7 @@ const facilitiesData = [
         icon: <Trophy size={40} />,
         items: [
             { name: 'Synthesized Sports Complex', desc: 'Olympic-grade indoor arenas and floodlit cricket grounds with advanced performance tracking.', img: '/assets/images/gallery_125.jpeg' },
-            { name: 'Eco-System Grounds', desc: '150 acres of carbon-negative green space, designed for mental peak performance and well-being.', img: '/assets/images/campus_main.png' },
+            { name: 'Eco-System Grounds', desc: '150 acres of carbon-negative green space, designed for mental peak performance and well-being.', img: '/assets/images/gallery_113.jpeg' },
         ]
     },
 ];
