@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Tilt from 'react-parallax-tilt';
-import { FiBookOpen, FiCpu, FiDribbble, FiShield, FiWifi, FiCoffee, FiTruck, FiActivity, FiArrowRight } from 'react-icons/fi';
+import { FiBookOpen, FiCpu, FiDribbble, FiShield, FiWifi, FiCoffee, FiTruck, FiActivity, FiArrowRight, FiZap } from 'react-icons/fi';
 import { GraduationCap, Microscope, Trophy, Zap, Map, Wind, Layers } from 'lucide-react';
 import drone3d from '../../assets/images/drone_academy_3d.png';
 
