@@ -30,7 +30,7 @@ const AdminLogin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const success = await login(username, password);
+        const success = await login(username.toLowerCase().trim(), password);
         if (success) {
             navigate('/portal-command-center/dashboard');
         } else {
@@ -112,8 +112,8 @@ const AdminLogin = () => {
                                             type="text"
                                             value={username}
                                             onChange={(e) => setUsername(e.target.value)}
-                                            className="w-full pl-16 pr-6 py-5 rounded-2xl bg-white/5 border border-white/10 focus:border-ku-gold outline-none transition-all font-bold text-white tracking-widest uppercase text-sm"
-                                            placeholder="USERNAME"
+                                            className="w-full pl-16 pr-6 py-5 rounded-2xl bg-white/5 border border-white/10 focus:border-ku-gold outline-none transition-all font-bold text-white tracking-widest text-sm"
+                                            placeholder="username"
                                             required
                                         />
                                     </div>
