@@ -8,7 +8,7 @@ class ErrorBoundary extends React.Component {
     }
 
     static getDerivedStateFromError(error) {
-        return { hasError: true };
+        return { hasError: true, error };
     }
 
     componentDidCatch(error, errorInfo) {
@@ -19,12 +19,20 @@ class ErrorBoundary extends React.Component {
         if (this.state.hasError) {
             return (
                 <div className="min-h-screen bg-[#020617] flex items-center justify-center p-8">
-                    <div className="text-center max-w-xl">
+                    <div className="text-center max-w-4xl">
                         <div className="w-24 h-24 bg-red-500/10 rounded-[2rem] flex items-center justify-center text-red-500 border border-red-500/30 mx-auto mb-10 shadow-glow-sm">
                             <FiZapOff size={48} />
                         </div>
                         <h2 className="text-4xl font-black text-white uppercase italic tracking-tighter mb-6">Matrix <span className="text-red-500">Critical Failure.</span></h2>
-                        <p className="text-gray-500 font-medium italic mb-12">The operational matrix has encountered a catastrophic logic breach. Neural link unstable.</p>
+                        <p className="text-gray-500 font-medium italic mb-6">The operational matrix has encountered a catastrophic logic breach. Neural link unstable.</p>
+                        
+                        <div className="bg-red-900/20 border border-red-500/30 p-6 rounded-2xl mb-12 text-left overflow-auto max-h-[40vh] max-w-full">
+                            <p className="text-red-400 font-mono text-sm mb-2 font-bold">{this.state.error?.toString()}</p>
+                            <pre className="text-red-300/70 font-mono text-[10px] whitespace-pre-wrap">
+                                {this.state.error?.stack}
+                            </pre>
+                        </div>
+
                         <button 
                             onClick={() => window.location.reload()}
                             className="flex items-center gap-4 bg-white text-ku-blue px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-ku-gold transition-all mx-auto shadow-glow-sm"
