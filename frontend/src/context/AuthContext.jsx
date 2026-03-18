@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
             API_BASE = `https://${API_BASE}`;
         }
     }
-    axios.defaults.baseURL = API_BASE || 'http://localhost:5000';
+    axios.defaults.baseURL = API_BASE || 'https://kaveri-admission-backend.onrender.com';
 
     useEffect(() => {
         const loadUser = async () => {
