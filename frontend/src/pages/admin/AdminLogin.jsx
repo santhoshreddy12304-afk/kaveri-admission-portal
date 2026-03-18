@@ -70,7 +70,7 @@ const AdminLogin = () => {
                         
                         <div className="mt-16 flex items-center gap-8 opacity-40 grayscale">
                             <FiActivity size={32} />
-                            <Fi Globe size={32} />
+                            <FiGlobe size={32} />
                             <FiShield size={32} />
                         </div>
                     </div>
