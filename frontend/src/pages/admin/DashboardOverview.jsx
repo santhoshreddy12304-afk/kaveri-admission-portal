@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import Tilt from 'react-parallax-tilt';
 import { toast } from 'react-toastify';
 import { FiUsers, FiMessageCircle, FiTrendingUp, FiMousePointer, FiCalendar, FiActivity, FiExternalLink, FiPlus, FiArrowRight } from 'react-icons/fi';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Legend } from 'recharts';
