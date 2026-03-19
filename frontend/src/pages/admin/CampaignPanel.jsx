@@ -20,7 +20,7 @@ const CampaignPanel = () => {
         }
         setSending(true);
         try {
-            const res = await axios.post('/api/leads/admin/campaign', campaign);
+            const res = await axios.post('/api/campaigns/broadcast', campaign);
             setStats(res.data);
             toast.success(`Broadcast successful: ${res.data.count} signals transmitted.`);
             setCampaign({ target: 'all', message: '', mediaUrl: '' });
