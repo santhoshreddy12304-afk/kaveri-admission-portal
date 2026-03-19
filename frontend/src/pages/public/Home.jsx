@@ -119,7 +119,7 @@ const Home = () => {
             <section className="relative h-[100svh] md:h-[950px] flex items-center justify-center overflow-hidden perspective-view pt-20 md:pt-0">
                 <motion.div style={{ y: y1 }} className="absolute inset-0 z-0">
                     <img src={kaveriHero} alt="Kaveri University Main Block" className="w-full h-full object-cover scale-110" />
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#020617]/95 via-[#0f172a]/80 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#020617]/70 via-[#0f172a]/50 md:from-[#020617]/95 md:via-[#0f172a]/80 to-transparent"></div>
                 </motion.div>
 
                 {/* Cyber HUD Elements */}
@@ -229,7 +229,7 @@ const Home = () => {
                     </div>
                 </motion.div>
 
-                <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-slate-50 to-transparent z-30"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-slate-950 to-transparent z-30"></div>
             </section>
 
             {/* ─────────── SCHOLARSHIP BANNER ─────────── */}

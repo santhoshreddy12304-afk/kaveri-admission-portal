@@ -59,21 +59,21 @@ const PublicLayout = () => {
                             ))}
                         </div>
 
-                        <div className="flex items-center gap-4 relative z-10">
+                        <div className="flex items-center gap-3 relative z-10">
                             <Link 
                                 to="/apply" 
-                                className="hidden md:flex items-center bg-white text-ku-blue px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-ku-gold transition-all shadow-2xl hover:-translate-y-1 active:scale-95 group"
+                                className="flex items-center bg-white text-ku-blue px-4 py-2 md:px-8 md:py-3 rounded-xl md:rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-widest hover:bg-ku-gold transition-all shadow-2xl hover:-translate-y-1 active:scale-95 group"
                             >
                                 Apply Now
-                                <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
+                                <FiArrowRight className="inline ml-1 md:ml-2 group-hover:translate-x-1 transition-transform" />
                             </Link>
 
                             {/* Mobile Menu Toggle Button */}
                             <button 
                                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                                className="lg:hidden p-3 rounded-xl bg-white/5 border border-white/10 text-white hover:text-ku-gold hover:bg-white/10 transition-colors"
+                                className="lg:hidden p-2 md:p-3 rounded-xl bg-white/5 border border-white/10 text-white hover:text-ku-gold hover:bg-white/10 transition-colors"
                             >
-                                {isMobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+                                {isMobileMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
                             </button>
                         </div>
                     </div>
@@ -108,14 +108,6 @@ const PublicLayout = () => {
                                         {link.label}
                                     </Link>
                                 ))}
-                                <Link 
-                                    to="/apply" 
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className="p-4 rounded-xl font-black text-xs uppercase tracking-[0.3em] flex items-center justify-between text-ku-blue bg-ku-gold hover:brightness-110 transition-all shadow-glow"
-                                >
-                                    Apply Now
-                                    <FiArrowRight size={18} />
-                                </Link>
                             </div>
                         </motion.div>
                     )}
