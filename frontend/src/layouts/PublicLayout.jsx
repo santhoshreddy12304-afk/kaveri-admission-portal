@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useOutlet, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../assets/images/logo.png';
-import { FiArrowRight, FiGlobe, FiPhone, FiMapPin, FiZap } from 'react-icons/fi';
+import { FiArrowRight, FiGlobe, FiPhone, FiMapPin, FiZap, FiMenu, FiX } from 'react-icons/fi';
 
 const PublicLayout = () => {
     const location = useLocation();
     const outlet = useOutlet();
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     return (
         <div className="flex flex-col min-h-screen bg-slate-950 text-white selection:bg-ku-gold selection:text-ku-blue">
@@ -34,6 +35,7 @@ const PublicLayout = () => {
                             </div>
                         </Link>
 
+                        {/* Desktop Navigation Links */}
                         <div className="hidden lg:flex items-center space-x-10 relative z-10">
                             {[
                                 { to: '/', label: 'Home' },
@@ -57,15 +59,67 @@ const PublicLayout = () => {
                             ))}
                         </div>
 
-                        <Link 
-                            to="/apply" 
-                            className="relative z-10 bg-white text-ku-blue px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-ku-gold transition-all shadow-2xl hover:-translate-y-1 active:scale-95 group"
-                        >
-                            Apply Now
-                            <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
-                        </Link>
+                        <div className="flex items-center gap-4 relative z-10">
+                            <Link 
+                                to="/apply" 
+                                className="hidden md:flex items-center bg-white text-ku-blue px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-ku-gold transition-all shadow-2xl hover:-translate-y-1 active:scale-95 group"
+                            >
+                                Apply Now
+                                <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+
+                            {/* Mobile Menu Toggle Button */}
+                            <button 
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                                className="lg:hidden p-3 rounded-xl bg-white/5 border border-white/10 text-white hover:text-ku-gold hover:bg-white/10 transition-colors"
+                            >
+                                {isMobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+                            </button>
+                        </div>
                     </div>
                 </motion.div>
+
+                {/* ─────────── MOBILE MENU OVERLAY ─────────── */}
+                <AnimatePresence>
+                    {isMobileMenuOpen && (
+                        <motion.div 
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.3 }}
+                            className="lg:hidden absolute top-[100px] left-6 right-6 glass-dark border border-white/10 rounded-3xl p-6 shadow-4xl backdrop-blur-3xl"
+                        >
+                            <div className="flex flex-col space-y-4">
+                                {[
+                                    { to: '/', label: 'Home' },
+                                    { to: '/about', label: 'About' },
+                                    { to: '/courses', label: 'Programs' },
+                                    { to: '/facilities', label: 'Facilities' },
+                                    { to: '/gallery', label: 'Gallery' },
+                                    { to: '/admission-process', label: 'Admission' },
+                                    { to: '/contact', label: 'Contact' },
+                                ].map(link => (
+                                    <Link 
+                                        key={link.to} 
+                                        to={link.to} 
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className={`p-4 rounded-xl text-xs font-black uppercase tracking-[0.3em] transition-all border ${location.pathname === link.to ? 'bg-ku-gold/10 text-ku-gold border-ku-gold/30' : 'bg-white/5 text-gray-400 border-white/5 hover:text-white hover:border-white/20'}`}
+                                    >
+                                        {link.label}
+                                    </Link>
+                                ))}
+                                <Link 
+                                    to="/apply" 
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="p-4 rounded-xl font-black text-xs uppercase tracking-[0.3em] flex items-center justify-between text-ku-blue bg-ku-gold hover:brightness-110 transition-all shadow-glow"
+                                >
+                                    Apply Now
+                                    <FiArrowRight size={18} />
+                                </Link>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </nav>
 
             {/* ─────────── MAIN VIEWPORT ─────────── */}

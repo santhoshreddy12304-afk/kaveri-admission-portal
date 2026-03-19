@@ -116,14 +116,14 @@ const Home = () => {
             </div>
 
             {/* ─────────── HERO ─────────── */}
-            <section className="relative h-[950px] flex items-center justify-center overflow-hidden perspective-view">
+            <section className="relative h-[100svh] md:h-[950px] flex items-center justify-center overflow-hidden perspective-view pt-20 md:pt-0">
                 <motion.div style={{ y: y1 }} className="absolute inset-0 z-0">
                     <img src={kaveriHero} alt="Kaveri University Main Block" className="w-full h-full object-cover scale-110" />
                     <div className="absolute inset-0 bg-gradient-to-br from-[#020617]/95 via-[#0f172a]/80 to-transparent"></div>
                 </motion.div>
 
                 {/* Cyber HUD Elements */}
-                <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
+                <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden hidden md:block">
                     <motion.div 
                         initial={{ opacity: 0, scale: 0.5 }}
                         animate={{ opacity: 0.15, scale: 1 }}
@@ -194,10 +194,10 @@ const Home = () => {
                         transition={{ delay: 0.8 }}
                         className="mb-14"
                     >
-                        <p className="text-gray-300 text-sm uppercase tracking-[0.4em] mb-6 font-black flex items-center justify-center gap-2">
+                        <p className="text-gray-300 text-[10px] md:text-sm uppercase tracking-[0.2em] md:tracking-[0.4em] mb-6 font-black flex items-center justify-center gap-2">
                             <Zap size={16} className="text-ku-gold" /> Application Deadline: June 30, 2026
                         </p>
-                        <div className="flex justify-center gap-6">
+                        <div className="flex justify-center gap-3 md:gap-6 flex-wrap">
                             {[
                                 { val: countdown.days, label: 'Days' },
                                 { val: countdown.hours, label: 'Hours' },
@@ -205,9 +205,9 @@ const Home = () => {
                                 { val: countdown.seconds, label: 'Secs' },
                             ].map(({ val, label }) => (
                                 <Tilt key={label} perspective={500} scale={1.05} transitionSpeed={2500}>
-                                    <div className="glass-card rounded-[2rem] px-8 py-5 min-w-[100px] border-ku-gold/20 shadow-[0_20px_40px_rgba(0,0,0,0.3)]">
-                                        <div className="text-4xl font-black text-ku-gold mb-1">{String(val ?? 0).padStart(2, '0')}</div>
-                                        <div className="text-[10px] text-gray-300 font-black uppercase tracking-widest">{label}</div>
+                                    <div className="glass-card rounded-2xl md:rounded-[2rem] px-4 py-4 md:px-8 md:py-5 min-w-[70px] md:min-w-[100px] border-ku-gold/20 shadow-[0_20px_40px_rgba(0,0,0,0.3)]">
+                                        <div className="text-2xl md:text-4xl font-black text-ku-gold mb-1">{String(val ?? 0).padStart(2, '0')}</div>
+                                        <div className="text-[9px] md:text-[10px] text-gray-300 font-black uppercase tracking-widest">{label}</div>
                                     </div>
                                 </Tilt>
                             ))}
@@ -215,14 +215,14 @@ const Home = () => {
                     </motion.div>
 
                     {/* CTA Buttons */}
-                    <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
-                        <motion.div whileHover={{ y: -5, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                            <Link to="/apply" className="bg-gradient-to-r from-ku-gold via-yellow-400 to-ku-gold text-ku-blue px-12 py-6 rounded-[2rem] font-black text-xl shadow-[0_20px_50px_rgba(255,191,0,0.4)] hover:shadow-[0_25px_60px_rgba(255,191,0,0.6)] transition-all duration-300 inline-flex items-center gap-3 active:scale-95 group">
+                    <div className="flex flex-col sm:flex-row justify-center items-center gap-4 md:gap-6 w-full px-4 md:px-0">
+                        <motion.div whileHover={{ y: -5, scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
+                            <Link to="/apply" className="w-full sm:w-auto bg-gradient-to-r from-ku-gold via-yellow-400 to-ku-gold text-ku-blue px-8 py-4 md:px-12 md:py-6 rounded-[2rem] font-black text-lg md:text-xl shadow-[0_20px_50px_rgba(255,191,0,0.4)] hover:shadow-[0_25px_60px_rgba(255,191,0,0.6)] transition-all duration-300 inline-flex items-center justify-center gap-3 active:scale-95 group">
                                 <span className="group-hover:translate-x-1 transition-transform">🚀 Ready to Apply?</span>
                             </Link>
                         </motion.div>
-                        <motion.div whileHover={{ y: -5, scale: 1.02 }}>
-                            <Link to="/courses" className="glass-card text-white border-white/40 px-12 py-6 rounded-[2rem] font-black text-xl hover:bg-white/10 transition-all duration-300 backdrop-blur-2xl">
+                        <motion.div whileHover={{ y: -5, scale: 1.02 }} className="w-full sm:w-auto">
+                            <Link to="/courses" className="w-full sm:w-auto inline-flex items-center justify-center glass-card text-white border-white/40 px-8 py-4 md:px-12 md:py-6 rounded-[2rem] font-black text-lg md:text-xl hover:bg-white/10 transition-all duration-300 backdrop-blur-2xl">
                                 Explore Courses
                             </Link>
                         </motion.div>
@@ -247,7 +247,7 @@ const Home = () => {
 
             {/* ─────────── STATS COUNTER ─────────── */}
             <section ref={statsRef} className="bg-ku-blue py-20 relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-10 opacity-10">
+                <div className="absolute top-0 right-0 p-10 opacity-10 hidden md:block">
                     <img src="/assets/images/logo.png" className="w-64 brightness-0 invert" alt="" />
                 </div>
                 <div className="container mx-auto px-4 relative z-10">
@@ -277,17 +277,17 @@ const Home = () => {
             </section>
 
             {/* ─────────── WHY KAVERI UNIVERSITY ─────────── */}
-            <section className="container mx-auto px-4 py-24 relative">
-                <div className="text-center mb-20">
+            <section className="container mx-auto px-4 py-16 md:py-24 relative">
+                <div className="text-center mb-12 md:mb-20">
                     <motion.p 
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
-                        className="text-ku-gold font-black uppercase tracking-[0.4em] text-xs mb-6"
+                        className="text-ku-gold font-black uppercase tracking-[0.4em] text-[10px] md:text-xs mb-6"
                     >
                         Academic Excellence
                     </motion.p>
-                    <h2 className="text-6xl font-black text-ku-blue mb-6">Why <span className="gradient-text tracking-tighter">Choose K.U?</span></h2>
-                    <p className="text-gray-500 text-xl max-w-3xl mx-auto font-medium leading-relaxed">Beyond a degree, we build a legacy. Explore what makes us unique.</p>
+                    <h2 className="text-4xl md:text-6xl font-black text-ku-blue mb-6">Why <span className="gradient-text tracking-tighter">Choose K.U?</span></h2>
+                    <p className="text-gray-500 text-lg md:text-xl max-w-3xl mx-auto font-medium leading-relaxed px-4">Beyond a degree, we build a legacy. Explore what makes us unique.</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {whyUs.map((item, i) => (
@@ -386,17 +386,17 @@ const Home = () => {
                                     { marks: '60% – 69.9% IPE', feePerSem: '₹1,00,000', annualFee: '₹2 Lakh', savings: '₹1 Lakh/yr Saved', color: 'border-yellow-400', tag: '✅ Silver Tier' },
                                 ].map((tier, i) => (
                                     <Tilt key={i} perspective={1000} scale={1.02} glareEnable={true} glareMaxOpacity={0.2}>
-                                        <div className={`glass-card rounded-[2.5rem] p-8 border-l-[6px] ${tier.color} flex items-center justify-between gap-6 backdrop-blur-3xl relative overflow-hidden group`}>
+                                        <div className={`glass-card rounded-[2.5rem] p-6 md:p-8 border-l-[6px] ${tier.color} flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 backdrop-blur-3xl relative overflow-hidden group`}>
                                             <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                            <div className="relative z-10">
-                                                <p className="text-white font-black text-xl mb-1">{tier.marks}</p>
-                                                <p className="text-gray-400 text-sm font-bold uppercase tracking-widest">{tier.savings}</p>
+                                            <div className="relative z-10 w-full text-left">
+                                                <p className="text-white font-black text-lg md:text-xl mb-1">{tier.marks}</p>
+                                                <p className="text-gray-400 text-xs md:text-sm font-bold uppercase tracking-widest">{tier.savings}</p>
                                             </div>
-                                            <div className="text-right relative z-10">
-                                                <p className="text-ku-gold font-black text-3xl mb-1">{tier.feePerSem}</p>
-                                                <p className="text-gray-400 text-[10px] font-black uppercase tracking-widest">Fixed per Semester</p>
+                                            <div className="relative z-10 w-full sm:text-right mt-4 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-t-0 border-white/10">
+                                                <p className="text-ku-gold font-black text-2xl md:text-3xl mb-1">{tier.feePerSem}</p>
+                                                <p className="text-gray-400 text-[9px] md:text-[10px] font-black uppercase tracking-widest">Fixed per Semester</p>
                                             </div>
-                                            <div className="absolute -right-4 -top-4 rotate-12 opacity-10 group-hover:opacity-20 transition-opacity">
+                                            <div className="absolute -right-4 -top-4 rotate-12 opacity-10 group-hover:opacity-20 transition-opacity hidden sm:block">
                                                 <GraduationCap size={100} />
                                             </div>
                                         </div>

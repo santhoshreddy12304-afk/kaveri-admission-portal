@@ -82,8 +82,8 @@ const AdminLogin = () => {
             </div>
 
             {/* ─────────── RIGHT: AUTH TERMINAL ─────────── */}
-            <div className="w-full lg:w-2/5 flex items-center justify-center p-8 relative">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-ku-gold/5 rounded-full blur-[150px]"></div>
+            <div className="w-full lg:w-2/5 flex items-center justify-center p-4 md:p-8 relative">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-ku-gold/5 rounded-full blur-[100px] md:blur-[150px]"></div>
                 
                 <motion.div 
                     initial={{ x: 50, opacity: 0 }}
@@ -91,9 +91,9 @@ const AdminLogin = () => {
                     className="w-full max-w-md relative z-10"
                 >
                     <Tilt perspective={1000} glareEnable={true} glareMaxOpacity={0.05}>
-                        <div className="glass-dark border border-white/10 p-12 rounded-[3.5rem] shadow-4xl depth-shadow">
-                            <div className="text-center mb-12">
-                                <h2 className="text-4xl font-black text-white italic tracking-tighter uppercase mb-4">Initialize <span className="text-ku-gold">Entry</span></h2>
+                        <div className="glass-dark border border-white/10 p-8 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] shadow-4xl depth-shadow">
+                            <div className="text-center mb-10 md:mb-12">
+                                <h2 className="text-3xl md:text-4xl font-black text-white italic tracking-tighter uppercase mb-4">Initialize <span className="text-ku-gold">Entry</span></h2>
                                 
                                 <div className={`inline-flex items-center gap-3 px-6 py-2 rounded-full text-[9px] uppercase font-black tracking-[0.2em] border transition-all duration-700 ${apiStatus.ok === true ? 'bg-green-500/10 text-green-400 border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.2)]' : apiStatus.ok === false ? 'bg-red-500/10 text-red-500 border-red-500/30 shadow-[0_0_15px_rgba(239,68,68,0.2)]' : 'bg-white/5 text-gray-500 border-white/10'}`}>
                                     {apiStatus.ok === true ? <FiCheckCircle className="animate-bounce" /> : apiStatus.ok === false ? <FiAlertCircle className="animate-pulse" /> : <FiCpu className="animate-spin" />}
