@@ -344,7 +344,7 @@ const ApplyNow = () => {
                                     <p className="text-gray-400 font-bold text-sm leading-relaxed uppercase tracking-tighter">Global Hub, Gowraram Village, Hyderabad, TG – 502279</p>
                                 </div>
                                 <motion.a href="tel:9666041795" whileHover={{ x: 5 }} className="flex items-center gap-5 group">
-                                    <div className="p-3 bg-white/5 rounded-xl text-ku-gold group-hover:bg-ku-gold group-hover:text-ku-blue transition-colors"><PhoneCall size={20} /></div>
+                                    <div className="p-3 bg-white/5 rounded-xl text-ku-gold group-hover:bg-ku-gold group-hover:text-ku-blue transition-colors"><FiPhoneCall size={20} /></div>
                                     <span className="text-white font-black text-xl tracking-tighter">+91 96660 41795</span>
                                 </motion.a>
                             </div>
